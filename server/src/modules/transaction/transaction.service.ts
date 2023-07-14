@@ -89,8 +89,10 @@ export class TransactionService {
       throw new BadRequestException(`A transação [${id}] não existe!`);
 
     return {
-      ...transaction,
-      category: transaction.category.name,
+      data: {
+        ...transaction,
+        category: transaction.category.name,
+      },
     };
   }
 
