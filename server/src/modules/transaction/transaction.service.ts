@@ -44,8 +44,11 @@ export class TransactionService {
     await this.transactionRepository.save(newTransaction);
 
     return {
-      ...newTransaction,
-      category: currentCategory.name,
+      message: 'Transação cadastrada com sucesso!',
+      data: {
+        ...newTransaction,
+        category: currentCategory.name,
+      },
     };
   }
 
@@ -122,9 +125,12 @@ export class TransactionService {
     });
 
     return {
-      ...currentTransaction,
-      ...updateTransactionDto,
-      category: currentCategory.name,
+      message: 'Transação atualizada com sucesso!',
+      data: {
+        ...currentTransaction,
+        ...updateTransactionDto,
+        category: currentCategory.name,
+      },
     };
   }
 
@@ -135,6 +141,8 @@ export class TransactionService {
     if (!transaction)
       throw new BadRequestException(`A transação [${id}] não existe!`);
     await this.transactionRepository.delete(id);
-    return transaction;
+    return {
+      message: 'Transação removida com sucesso!',
+    };
   }
 }
