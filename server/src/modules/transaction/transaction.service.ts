@@ -1,38 +1,30 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Category } from '../category/entities';
 import {
   CreateTransactionDto,
   SearchTransactionDto,
   UpdateTransactionDto,
 } from './dto';
-import { Category, Transaction } from './entities';
+import { Transaction } from './entities';
+import { CategoryService } from '../category/category.service';
 
 @Injectable()
 export class TransactionService {
   constructor(
     @InjectRepository(Transaction)
     private readonly transactionRepository: Repository<Transaction>,
-    @InjectRepository(Category)
-    private readonly categoryRepository: Repository<Category>,
+    private readonly categoryService: CategoryService,
   ) {}
   async create(createTransactionDto: CreateTransactionDto) {
     const { description, amount, category, type } = createTransactionDto;
-    const categoryAlreadyExist = await this.categoryRepository.findOne({
-      where: { name: category },
-    });
+    const currentCategory =
+      (await this.categoryService.findOneByCategoryName(category)) ||
+      (await this.categoryService.create({ name: category })).data;
 
     if (['income', 'outcome'].indexOf(type) === -1)
       throw new BadRequestException('Tipo de transação inválida!');
-
-    if (!categoryAlreadyExist) {
-      const newCategory = this.categoryRepository.create({ name: category });
-      await this.categoryRepository.save(newCategory);
-    }
-
-    const currentCategory = await this.categoryRepository.findOne({
-      where: { name: category },
-    });
 
     const newTransaction = this.transactionRepository.create({
       description,
@@ -106,18 +98,9 @@ export class TransactionService {
 
     const { description, amount, category, type } = updateTransactionDto;
 
-    const categoryAlreadyExist = await this.categoryRepository.findOne({
-      where: { name: category },
-    });
-
-    if (!categoryAlreadyExist) {
-      const newCategory = this.categoryRepository.create({ name: category });
-      await this.categoryRepository.save(newCategory);
-    }
-
-    const currentCategory = await this.categoryRepository.findOne({
-      where: { name: category },
-    });
+    const currentCategory =
+      (await this.categoryService.findOneByCategoryName(category)) ||
+      (await this.categoryService.create({ name: category })).data;
 
     await this.transactionRepository.update(id, {
       description,

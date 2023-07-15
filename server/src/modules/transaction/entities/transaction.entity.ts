@@ -7,7 +7,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Category } from './category.entity';
+import { Category } from '../../category/entities';
 import { TransactionType } from '../enums';
 
 @Entity()
