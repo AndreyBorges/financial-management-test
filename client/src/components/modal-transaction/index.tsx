@@ -126,6 +126,8 @@ const ModalTransaction: FC<IModalTransactionProps> = ({ handleOpenModal }) => {
     ev.preventDefault()
     try {
       await formValidationSchema.validate(state, { abortEarly: false })
+      handleCreateTransaction(state)
+      handleCLoseModal()
     } catch (err) {
       const errors = err as yup.ValidationError
       const errorsMessages = errors.inner.reduce((acc, error) => {
@@ -135,8 +137,6 @@ const ModalTransaction: FC<IModalTransactionProps> = ({ handleOpenModal }) => {
 
       setErrors(errorsMessages)
     }
-    handleCreateTransaction(state)
-    handleCLoseModal()
   }
 
   return (
