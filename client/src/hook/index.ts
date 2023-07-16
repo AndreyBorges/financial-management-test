@@ -1,3 +1,5 @@
 export { default as useDebounce } from './useDebounce'
 export { default as useTransactions } from './useTransactions'
 export { default as useMediaQuery } from './useMediaQuery'
+export { default as useCategories } from './useCategories'
+export { default as useModal } from './useModal'
