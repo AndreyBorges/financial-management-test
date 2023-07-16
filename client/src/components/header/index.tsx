@@ -1,37 +1,45 @@
-import React, { useState } from 'react'
-import { HeaderContainer } from './styles'
-import { ModalTransaction, Button } from '..'
-import { useMediaQuery } from '@/hook'
+import { useMediaQuery, useModal } from '@/hook'
+import { ModalType } from '@/interfaces'
 import { CurrencyDollar } from 'phosphor-react'
+import { Button } from '..'
+import { HeaderContainer, LogoContainer } from './styles'
 
 const Header = () => {
-  const [isOpen, setIsOpen] = useState(false)
-  const handleOpenModal = () => {
-    setIsOpen(state => !state)
-  }
+  const { handleOpenModal } = useModal()
 
-  const isMobile = useMediaQuery('(min-width: 650px)')
-  
+  const isDesktop = useMediaQuery('(min-width: 750px)')
+
   return (
-    <>
-      <HeaderContainer>
-        <div>
-          <h1>Gerenciamento Pessoal</h1>
+    <HeaderContainer>
+      <div>
+        <LogoContainer>
+          {isDesktop ? (
+            <>
+              <img src='logo-icon.png' alt='Logo' />
+              <h1>Gerenciamento Financeiro </h1>
+            </>
+          ) : (
+            <>
+              <img src='logo-icon.png' alt='Logo' />
+              <h1>
+                Gerenciamento <br /> Financeiro
+              </h1>
+            </>
+          )}
+        </LogoContainer>
 
-          <Button onClick={handleOpenModal}>
-            {isMobile ? (
-              <>
-                <CurrencyDollar size={24} />
-                Adicionar Transação
-              </>
-            ) : (
+        <Button onClick={() => handleOpenModal(ModalType.CREATE_TRANSACTION)}>
+          {isDesktop ? (
+            <>
               <CurrencyDollar size={24} />
-            )}
-          </Button>
-        </div>
-      </HeaderContainer>
-      {isOpen && <ModalTransaction {...{ handleOpenModal }} />}
-    </>
+              Adicionar Transação
+            </>
+          ) : (
+            <CurrencyDollar size={24} />
+          )}
+        </Button>
+      </div>
+    </HeaderContainer>
   )
 }
 
