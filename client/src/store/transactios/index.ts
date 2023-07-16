@@ -1,5 +1,5 @@
-import { atom } from 'jotai'
 import { ITransaction } from '@/interfaces'
+import { atom } from 'jotai'
 
 
 interface ITransactionsState {
@@ -8,6 +8,7 @@ interface ITransactionsState {
   isLoading: boolean
   error: string | null
   success: string | null
+  refreshData?: boolean
 }
 
 const transactionDefaultValue = atom<ITransactionsState>({
@@ -15,7 +16,8 @@ const transactionDefaultValue = atom<ITransactionsState>({
   transactions: [],
   isLoading: false,
   error: null,
-  success: null
+  success: null,
+  refreshData: false
 })
 
 export const transactionAtom = atom(
