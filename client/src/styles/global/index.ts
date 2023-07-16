@@ -6,6 +6,7 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     outline: 0;
+    list-style: none;
     -webkit-font-smoothing: antialiased;
 
      input[type=number]::-webkit-inner-spin-button { 
@@ -26,9 +27,9 @@ export const GlobalStyle = createGlobalStyle`
   body {
     font-family: 'Open Sans', sans-serif;
     font-size: 16px;
-    background: linear-gradient(90deg, #21C25E 0%, #02A35C 100%);
-  -webkit-font-smoothing: antialiased;
-
+    background: linear-gradient(45deg, #21C25E 0%, #02A35C 100%);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
   }
 
   button {
