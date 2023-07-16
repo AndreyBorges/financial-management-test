@@ -13,11 +13,13 @@ import {
 import { Api } from '@/services'
 import { AxiosError } from 'axios'
 
+const baseUrl = '/transaction'
+
 const getAll = async (
   { limit, page }: IGetAllTransactionsQueryOptions = { limit: 5, page: 1 }
 ): Promise<IAxiosResponse<IGetAllTransactionsResponseDTO>> => {
   try {
-    const { data } = await Api.get(`/transaction?limit=${limit}&page=${page}`)
+    const { data } = await Api.get(`${baseUrl}?limit=${limit}&page=${page}`)
     if (data.error) throw data
     return {
       data,
@@ -41,7 +43,7 @@ const getOne = async ({
   IAxiosResponse<IGetOneTransactionsResponseDTO>
 > => {
   try {
-    const { data } = await Api.get(`/transaction/${id}`)
+    const { data } = await Api.get(`${baseUrl}/${id}`)
     if (data.error) throw data
     return {
       data,
@@ -63,7 +65,7 @@ const update = async ({
   ...data
 }: IUpdadeTransactionDTO): Promise<IAxiosResponse<IUpdateTransactionResponseDTO>> => {
   try {
-    const { data: responseData } = await Api.patch(`/transaction/${id}`, data)
+    const { data: responseData } = await Api.patch(`${baseUrl}/${id}`, data)
     if (responseData.error) throw data
     return {
       ...responseData,
@@ -85,7 +87,7 @@ const create = async (
   createData: ICreateTransactionDTO
 ): Promise<IAxiosResponse<ICreateTransactionResponseDTO>> => {
   try {
-    const { data } = await Api.post('/transaction', createData)
+    const { data } = await Api.post(baseUrl, createData)
     if (data.error) throw data
 
     return {
@@ -110,7 +112,7 @@ const remove = async ({
   IAxiosResponse<IDeleteOneTransactionsResponseDTO>
 > => {
   try {
-    const { data } = await Api.delete(`/transaction/${id}`)
+    const { data } = await Api.delete(`${baseUrl}/${id}`)
     if (data.error) throw data
     return {
       data,
