@@ -1,3 +1,5 @@
+import { ICommonResponseDTO } from "."
+
 export interface ITransaction {
   id: number
   description: string
@@ -34,15 +36,13 @@ export interface ICreateTransactionDTO {
   type: string
 }
 
+// export interface ICurrentTransactionDTO extends ICreateTransactionDTO { }
+
+
 export interface IStateTransactionDTO extends Partial<ICreateTransactionDTO> {}
 
 export interface IUpdadeTransactionDTO extends Partial<ICreateTransactionDTO> {
-  id: number
-}
-
-export interface ICommonResponseDTO<T> {
-  message?: string
-  data?: T
+  id?: number
 }
 
 export interface IGetOneTransactionsResponseDTO extends ICommonResponseDTO<ITransaction> {}
