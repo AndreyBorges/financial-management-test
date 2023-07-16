@@ -1,12 +1,13 @@
+import { ICreateTransactionDTO, ITransaction, IUpdadeTransactionDTO, ModalType } from '@/interfaces'
 import { transactionsService } from '@/services'
 import { transactionAtom } from '@/store'
 import { useAtom } from 'jotai'
-import { useEffect, useState } from 'react'
-import { ICreateTransactionDTO, IUpdadeTransactionDTO } from '../interfaces'
+import useModal from './useModal'
 
 const useTransactions = () => {
   const [state, setState] = useAtom(transactionAtom)
-  const [refreshData, setRefreshData] = useState(false)
+  const { refreshData } = state
+  const { handleOpenModal } = useModal()
 
   const handleGetAllTransactions = async () => {
     setState({ isLoading: true })
@@ -50,6 +51,7 @@ const useTransactions = () => {
     if (error) setState({ error: error.message })
     handleRefreshTransactions()
     setState({ isLoading: false })
+    handleOpenModal()
   }
 
   const handleUpdateTransaction = async (updateTransactionDTO: IUpdadeTransactionDTO) => {
@@ -62,13 +64,19 @@ const useTransactions = () => {
     setState({ isLoading: false })
   }
 
-  const handleRefreshTransactions = () => {
-    setRefreshData(!refreshData)
+  const handleDeleteCurrentTransaction = (transactions: ITransaction) => {
+    setState({ currentTransaction: transactions })
+    handleOpenModal(ModalType.DELETE_TRANSACTION)
   }
 
-  useEffect(() => {
-    handleGetAllTransactions()
-  }, [refreshData])
+  const handleSetCurrentTransaction = (transactions: ITransaction) => {
+    setState({ currentTransaction: transactions })
+    handleOpenModal(ModalType.EDIT_TRANSACTION)
+  }
+
+  const handleRefreshTransactions = () => {
+    setState({ refreshData: !refreshData })
+  }
 
   return {
     state,
@@ -76,7 +84,10 @@ const useTransactions = () => {
     handleDeleteTransaction,
     handleUpdateTransaction,
     handleGetOneTransaction,
-    handleRefreshTransactions
+    handleRefreshTransactions,
+    handleSetCurrentTransaction,
+    handleDeleteCurrentTransaction,
+    handleGetAllTransactions
   }
 }
 
