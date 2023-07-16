@@ -34,7 +34,7 @@ export class CategoryService {
 
   async findAll() {
     const categories = await this.categoryRepository.find();
-    return categories;
+    return { data: categories };
   }
 
   async update(id: number, updateCategoryDto: UpdateCategoryDto) {
@@ -74,9 +74,6 @@ export class CategoryService {
     const foundCategory = await this.categoryRepository.findOne({
       where: { name },
     });
-
-    console.log({ foundCategory });
-
     return foundCategory;
   }
 }
