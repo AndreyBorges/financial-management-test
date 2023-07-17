@@ -3,6 +3,7 @@ import { TransactionType } from '@/interfaces'
 import { capitalizeString, handleMaskValue } from '@/utils'
 import { Broom, MagnifyingGlass } from '@phosphor-icons/react'
 import React, { useEffect, useState } from 'react'
+import * as yup from 'yup'
 import { SelectInput } from '..'
 import {
   FilterButtons,
@@ -11,6 +12,7 @@ import {
   FilterWrapper,
   RangeInputWrapper
 } from './styles'
+
 const types = [
   {
     label: 'Entrada',
@@ -21,14 +23,25 @@ const types = [
     value: TransactionType.OUTCOME
   }
 ]
+const initialErrorState = {
+  lte: '',
+  gte: ''
+}
 
 const Filter = () => {
   const { state } = useCategories()
   const { categories } = state
   const [maskedGTE, setMaskedGTE] = useState<string>('R$ 0,00')
   const [maskedLTE, setMaskedLTE] = useState<string>('R$ 0,00')
+  const [errors, setErrors] = useState(initialErrorState)
   const { handleClearFilter, setFilterState, filterState, handleSubmit } = useFilter()
   const { isLoading } = state
+  const { gte, lte } = filterState
+
+  const formValidationSchema = yup.object().shape({
+    lte: yup.number().min(gte || 0, `${maskedGTE} é maior que ${maskedLTE}`),
+    gte: yup.number().max(lte || 9999 * 9999, 'Valor mínimo não pode ser maior que o valor máximo')
+  })
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = ev => {
     const { name, value } = ev.target
@@ -37,6 +50,20 @@ const Filter = () => {
       const numericValue = value.replace(/[^0-9]/g, '') || '0'
 
       const floatValue = parseInt(numericValue) / 100
+
+      if (
+        (name === 'lte' && floatValue < (gte || 0)) ||
+        (name === 'gte' && floatValue > (lte || 0))
+      ) {
+        setFilterState({
+          filterState: {
+            ...filterState,
+            lte: Number(floatValue) || 0,
+            gte: Number(floatValue) || 0
+          }
+        })
+        return
+      }
 
       setFilterState({
         filterState: {
@@ -55,6 +82,30 @@ const Filter = () => {
     })
   }
 
+  const handleFilterSubmit: React.FormEventHandler<HTMLFormElement> = async ev => {
+    ev.preventDefault()
+    try {
+      await formValidationSchema.validate(
+        { lte: filterState.lte, gte: filterState.gte },
+        { abortEarly: false }
+      )
+      handleSubmit(ev)
+    } catch (err) {
+      const errors = err as yup.ValidationError
+      const errorsMessages = errors.inner.reduce((acc, error) => {
+        acc[error.path as keyof typeof initialErrorState] = error.message
+        return acc
+      }, {} as typeof initialErrorState)
+
+      setErrors(errorsMessages)
+    }
+  }
+
+  useEffect(() => {
+    console.clear()
+    console.log({ errors })
+  }, [errors])
+
   useEffect(() => {
     handleMaskValue(filterState.lte || 0, setMaskedLTE)
   }, [filterState.lte])
@@ -70,7 +121,7 @@ const Filter = () => {
   }
 
   return (
-    <FilterWrapper onSubmit={handleSubmit}>
+    <FilterWrapper onSubmit={handleFilterSubmit}>
       <h1>Filtro das transações</h1>
       <FilterInputs>
         <div>
