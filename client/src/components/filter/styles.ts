@@ -5,7 +5,7 @@ export const FilterWrapper = styled.form`
   ${({ theme }) => css`
     width: calc(100% - 32px);
     max-width: 1220px;
-    margin: 4rem auto 0;
+    margin-inline: auto;
     padding: ${pxToRem(32)};
     border-radius: 12px;
     background: ${theme.gray50};
@@ -22,6 +22,8 @@ export const FilterWrapper = styled.form`
       margin-bottom: 1rem;
     }
     @media (max-width: 750px) {
+      margin: 2rem auto 0;
+
       gap: 0.5rem;
       h1 {
         font-size: ${pxToRem(24)};
@@ -39,15 +41,17 @@ export const FilterInputs = styled.div`
 
     > div {
       width: 100%;
+
       input {
         width: 100%;
         border-radius: ${pxToRem(6)};
         border: 0;
+        box-shadow: 0 0 0 1px #37aa5c;
+
         background: ${theme.gray50};
         color: ${theme.green800};
         padding: 1.25rem 1rem;
         font-size: ${pxToRem(16)};
-        box-shadow: 0 0 0 1px #37aa5c;
 
         &::placeholder {
           color: ${theme.green800};
@@ -58,37 +62,37 @@ export const FilterInputs = styled.div`
     @media (max-width: 750px) {
       grid-template-columns: 1fr;
       gap: 0.5rem;
+      > div {
+      }
     }
   `}
 `
 export const FilterSelects = styled.div`
-  ${({ theme }) => css`
-    width: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+
+  > div:first-of-type {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
+  }
 
+  @media (max-width: 750px) {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
     > div:first-of-type {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
-    }
-
-    @media (max-width: 750px) {
       grid-template-columns: 1fr;
       gap: 0.5rem;
-      > div:first-of-type {
-        grid-template-columns: 1fr;
-        gap: 0.5rem;
-      }
-
-      button {
-        align-self: flex-end;
-        gap: 0.5rem;
-        padding: 0.81rem;
-      }
     }
-  `}
+
+    button {
+      align-self: flex-end;
+      gap: 0.5rem;
+      padding: 0.81rem;
+    }
+  }
 `
 
 export const FilterButtons = styled.div`
@@ -96,6 +100,7 @@ export const FilterButtons = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
+
     button {
       display: flex;
       align-items: center;
@@ -107,16 +112,29 @@ export const FilterButtons = styled.div`
       text-transform: uppercase;
       font-weight: 600;
       padding: 0.5rem 1rem;
-
       svg {
         color: #37aa5c;
       }
-
       &:hover {
         background: #37aa5c;
         color: ${theme.gray50};
         svg {
           color: ${theme.green50};
+        }
+      }
+
+      &:disabled {
+        background: ${theme.gray50};
+        color: ${theme.green600};
+        box-shadow: 0 0 0 1px ${theme.green600};
+        opacity: 0.5;
+
+        svg {
+          color: ${theme.green600};
+
+          &:hover {
+            color: ${theme.green600};
+          }
         }
       }
     }
@@ -130,4 +148,25 @@ export const FilterButtons = styled.div`
       }
     }
   `}
+`
+
+export const RangeInputWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: ${pxToRem(-18)};
+  span {
+    display: block;
+    height: 18px;
+  }
+
+  @media (max-width: 750px) {
+    span {
+      margin-bottom: .25rem;
+    }
+    margin-top: 0;
+
+    gap: 0.5rem;
+    grid-template-columns: 1fr 1fr;
+  }
 `
