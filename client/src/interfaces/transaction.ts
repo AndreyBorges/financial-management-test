@@ -1,4 +1,4 @@
-import { ICommonResponseDTO } from "."
+import { ICommonResponseDTO, TransactionType } from '.'
 
 export interface ITransaction {
   id: number
@@ -13,6 +13,10 @@ export interface ITransaction {
 export interface IGetAllTransactionsQueryOptions {
   page?: number
   limit?: number
+  description?: string
+  amount?: number
+  type?: TransactionType
+  category?: string
 }
 export interface IGetOneOrDeleteTransactionsQueryOptions {
   id: number
@@ -37,7 +41,6 @@ export interface ICreateTransactionDTO {
 }
 
 // export interface ICurrentTransactionDTO extends ICreateTransactionDTO { }
-
 
 export interface IStateTransactionDTO extends Partial<ICreateTransactionDTO> {}
 
