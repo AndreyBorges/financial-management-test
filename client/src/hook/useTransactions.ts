@@ -1,4 +1,10 @@
-import { ICreateTransactionDTO, ITransaction, IUpdadeTransactionDTO, ModalType } from '@/interfaces'
+import {
+  ICreateTransactionDTO,
+  IGetAllTransactionsQueryOptions,
+  ITransaction,
+  IUpdadeTransactionDTO,
+  ModalType
+} from '@/interfaces'
 import { transactionsService } from '@/services'
 import { transactionAtom } from '@/store'
 import { useAtom } from 'jotai'
@@ -9,12 +15,9 @@ const useTransactions = () => {
   const { refreshData } = state
   const { handleOpenModal } = useModal()
 
-  const handleGetAllTransactions = async () => {
+  const handleGetAllTransactions = async (param?: IGetAllTransactionsQueryOptions) => {
     setState({ isLoading: true })
-    const { data, error, success } = await transactionsService.getAll({
-      limit: 10,
-      page: 1
-    })
+    const { data, error, success } = await transactionsService.getAll(param)
     if (success && data)
       setState({
         transactions: data.data
