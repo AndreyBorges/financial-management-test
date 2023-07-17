@@ -1,11 +1,11 @@
-import { useCategories, useModal } from '@/hook'
+import { BackDrop, Button } from '@/components'
+import { useCategories, useModal, useTransactions } from '@/hook'
 import { ICreateCategoryDTO, ModalType } from '@/interfaces'
-import { CaretLeft, SpinnerGap, X } from 'phosphor-react'
-import React, { FC, useEffect, useState } from 'react'
+import { CaretLeft, SpinnerGap } from 'phosphor-react'
+import React, { FC, useState } from 'react'
 import * as yup from 'yup'
-import { Button, BackDrop } from '@/components'
-import { ContainerInputWrapper, ModalBody, ModalHeader, ModalCategoryWrapper } from './styles'
 import { Loading } from '..'
+import { ContainerInputWrapper, ModalBody, ModalCategoryWrapper, ModalHeader } from './styles'
 
 const initalState = {
   name: ''
@@ -23,9 +23,10 @@ const formValidationSchema = yup.object().shape({
 })
 
 const ModalEditCategory: FC = () => {
-  const { handleUpdateCategory, state: atomState, handleRefreshCategory } = useCategories()
-  const { handleOpenModal, state: modalState } = useModal()
-  const { prevModal } = modalState
+  const { handleUpdateCategory, state: atomState } = useCategories()
+  const { handleOpenModal } = useModal()
+  const { handleRefreshTransactions } = useTransactions()
+
   const { isLoading, currentCategory } = atomState
   const [state, setState] = useState<ICreateCategoryDTO>(currentCategory)
   const [errors, setErrors] = useState<typeof initialErrorState>(initialErrorState)
@@ -37,11 +38,6 @@ const ModalEditCategory: FC = () => {
       ...prev,
       [name]: value
     }))
-  }
-
-  const handleCloseModal = () => {
-    setState(initalState)
-    handleOpenModal()
   }
 
   const handleBlur = async (e: React.FocusEvent<HTMLInputElement>) => {
@@ -84,7 +80,8 @@ const ModalEditCategory: FC = () => {
 
       setErrors(errorsMessages)
     } finally {
-      handleOpenModal(prevModal)
+      handleOpenModal(ModalType.LIST_CATEGORY)
+      handleRefreshTransactions()
     }
   }
 
@@ -95,7 +92,7 @@ const ModalEditCategory: FC = () => {
       <ModalCategoryWrapper>
         <ModalHeader>
           <h1>Editar Categoria</h1>
-          <div onClick={() => handleOpenModal(prevModal)}>
+          <div onClick={() => handleOpenModal(ModalType.LIST_CATEGORY)}>
             <CaretLeft size={24} weight='bold' />
             <span>Voltar</span>
           </div>
@@ -121,7 +118,7 @@ const ModalEditCategory: FC = () => {
           </Button>
         </ModalBody>
       </ModalCategoryWrapper>
-      <BackDrop onClick={handleCloseModal} />
+      <BackDrop />
     </>
   )
 }

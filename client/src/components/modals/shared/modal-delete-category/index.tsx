@@ -1,11 +1,12 @@
-import { useCategories, useModal, useTransactions } from '@/hook'
+import { useCategories, useModal } from '@/hook'
 
-import { X } from 'phosphor-react'
-import React, { FC } from 'react'
+import { CaretLeft } from 'phosphor-react'
+import { FC } from 'react'
 
-import { Button, BackDrop } from '@/components'
-import { ModalBody, ModalCategoryWrapper, ModalFooter, ModalHeader } from './styles'
+import { BackDrop, Button } from '@/components'
+import { ModalType } from '@/interfaces'
 import { Loading } from '..'
+import { ModalBody, ModalCategoryWrapper, ModalFooter, ModalHeader } from './styles'
 
 const ModalDeleteCategory: FC = () => {
   const { state, handleDeleteCategory } = useCategories()
@@ -20,8 +21,9 @@ const ModalDeleteCategory: FC = () => {
       <ModalCategoryWrapper>
         <ModalHeader>
           <h1>Deletar Categoria</h1>
-          <div onClick={() => handleOpenModal()}>
-            <X size={24} weight='bold' />
+          <div onClick={() => handleOpenModal(ModalType.LIST_CATEGORY, true)}>
+            <CaretLeft size={24} weight='bold' />
+            <span>Voltar</span>
           </div>
         </ModalHeader>
 
@@ -35,7 +37,7 @@ const ModalDeleteCategory: FC = () => {
             variant='primary'
             onClick={() => {
               handleDeleteCategory(Number(currentCategory.id))
-              handleOpenModal(prevModal)
+              handleOpenModal(prevModal, true)
             }}
           >
             Sim
@@ -45,7 +47,7 @@ const ModalDeleteCategory: FC = () => {
           </Button>
         </ModalFooter>
       </ModalCategoryWrapper>
-      <BackDrop onClick={handleOpenModal} />
+      <BackDrop />
     </>
   )
 }

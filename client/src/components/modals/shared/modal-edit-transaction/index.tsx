@@ -1,16 +1,11 @@
-import { useCategories, useModal, useTransactions } from '@/hook'
-import {
-  ICreateTransactionDTO,
-  IModal,
-  ITransaction,
-  IUpdadeTransactionDTO,
-  ModalType,
-  TransactionType
-} from '@/interfaces'
-import { ArrowCircleDown, ArrowCircleUp, GearSix, SpinnerGap, X } from 'phosphor-react'
+import { BackDrop, Button, SelectInput } from '@/components'
+import { useCategories, useMediaQuery, useModal, useTransactions } from '@/hook'
+import { IUpdadeTransactionDTO, ModalType, TransactionType } from '@/interfaces'
+import { handleMaskValue } from '@/utils'
+import { ArrowCircleDown, ArrowCircleUp, CaretLeft, GearSix, SpinnerGap, X } from 'phosphor-react'
 import React, { FC, useEffect, useState } from 'react'
 import * as yup from 'yup'
-import { Button, BackDrop, SelectInput } from '@/components'
+import { Loading } from '..'
 import {
   ContainerInputWrapper,
   ModalBody,
@@ -20,7 +15,6 @@ import {
   TransactionsButtonType,
   TransactionsType
 } from './styles'
-import Loading from '../loading'
 
 const initalState = {
   amount: 0,
@@ -44,6 +38,7 @@ const formValidationSchema = yup.object().shape({
   description: yup
     .string()
     .required('A descrição é obrigatória')
+    .max(20, 'A descrição deve ter no máximo 20 caracteres')
     .min(3, 'A descrição deve ter no mínimo 3 caracteres')
 })
 
@@ -53,7 +48,9 @@ const ModalEditTransaction: FC = () => {
     state: transactionState,
     handleRefreshTransactions
   } = useTransactions()
-  const { handleOpenModal } = useModal()
+  const isMobile = useMediaQuery('(max-width: 750px)')
+  const { handleOpenModal, state: modalState } = useModal()
+  const { prevModal } = modalState
 
   const { state: categoryState } = useCategories()
   const { categories, isLoading: isCategoriesLoading } = categoryState
@@ -92,7 +89,7 @@ const ModalEditTransaction: FC = () => {
 
   const handleCloseModal = () => {
     setState(initalState)
-    handleOpenModal()
+    handleOpenModal(isMobile ? prevModal : ModalType.NULL)
   }
 
   const handleBlur = async (e: React.FocusEvent<HTMLInputElement>) => {
@@ -146,29 +143,15 @@ const ModalEditTransaction: FC = () => {
         acc[error.path as keyof typeof initialErrorState] = error.message
         return acc
       }, {} as typeof initialErrorState)
-
       setErrors(errorsMessages)
     } finally {
       handleRefreshTransactions()
     }
   }
-
   useEffect(() => {
-    if (state.category === 'new') {
-      handleOpenModal(ModalType.CREATE_CATEGORY)
-    }
-  }, [state.category])
+    if (!state.amount) return
 
-  useEffect(() => {
-    const handleMaskValue = (value?: number) => {
-      if (!value) return
-      const formattedValue = value.toLocaleString('pt-BR', {
-        style: 'currency',
-        currency: 'BRL'
-      })
-      setMasked(formattedValue)
-    }
-    handleMaskValue(state.amount)
+    handleMaskValue(state.amount, setMasked)
   }, [state.amount])
 
   if (isLoading || isCategoriesLoading) return <Loading />
@@ -178,7 +161,16 @@ const ModalEditTransaction: FC = () => {
       <ModalTransactionWrapper>
         <ModalHeader>
           <h1>Editar Transação</h1>
-          <X size={32} onClick={handleCloseModal} />
+          {ModalType.NULL === prevModal ? (
+            <div onClick={() => handleOpenModal(isMobile ? prevModal : ModalType.NULL)}>
+              <X size={24} weight='bold' />
+            </div>
+          ) : (
+            <div onClick={() => handleOpenModal(prevModal)}>
+              <CaretLeft size={24} weight='bold' />
+              <span>Voltar</span>
+            </div>
+          )}
         </ModalHeader>
 
         <ModalBody onSubmit={handleSubmit}>
@@ -254,7 +246,7 @@ const ModalEditTransaction: FC = () => {
           </Button>
         </ModalBody>
       </ModalTransactionWrapper>
-      <BackDrop onClick={handleCloseModal} />
+      <BackDrop />
     </>
   )
 }

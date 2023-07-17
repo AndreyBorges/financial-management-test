@@ -1,12 +1,12 @@
-import { useModal, useCategories } from '@/hook'
+import { useCategories, useModal } from '@/hook'
 
-import { CaretLeft, GearSix, PencilSimpleLine, Trash, X } from 'phosphor-react'
-import React, { FC } from 'react'
+import { CaretLeft, PencilSimpleLine, X } from 'phosphor-react'
+import { FC } from 'react'
 
-import { Button, BackDrop } from '@/components'
-import { ModalBody, ModalCategoryWrapper, ModalFooter, ModalHeader } from './styles'
-import { Loading } from '..'
+import { BackDrop, Button } from '@/components'
 import { ICategory, ModalType } from '@/interfaces'
+import { Loading } from '..'
+import { ModalBody, ModalCategoryWrapper, ModalHeader } from './styles'
 
 const CategoryItem: FC<ICategory> = category => {
   const { handleGetCurrentCategory } = useCategories()
@@ -68,7 +68,7 @@ const ModalListCategories: FC = () => {
           Nova Categoria
         </Button>
       </ModalCategoryWrapper>
-      <BackDrop onClick={handleOpenModal} />
+      <BackDrop />
     </>
   )
 }

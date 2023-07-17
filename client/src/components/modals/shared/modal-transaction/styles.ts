@@ -155,9 +155,6 @@ export const ModalBody = styled.form`
       font-size: 1.25rem;
     }
 
-    > div {
-    }
-
     > button {
       justify-self: flex-end;
       font-size: 1rem;

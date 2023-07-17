@@ -140,6 +140,19 @@ export const ModalHeader = styled.header`
       color: ${theme.green100};
       cursor: pointer;
     }
+
+    > div {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      cursor: pointer;
+
+      span {
+        color: ${theme.green50};
+        text-transform: uppercase;
+        letter-spacing: 0.1rem;
+      }
+    }
   `}
 `
 

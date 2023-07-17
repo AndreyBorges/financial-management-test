@@ -7,7 +7,8 @@ import {
   ModalDeleteTransaction,
   ModalListCategory,
   ModalEditCategory,
-  ModalDeleteCategory
+  ModalDeleteCategory,
+  ModalDetailsTransaction
 } from './shared'
 import { ModalType } from '@/interfaces'
 
@@ -18,11 +19,13 @@ const Modals = () => {
   switch (modal) {
     case ModalType.CREATE_TRANSACTION:
       return <ModalTransaction />
+    case ModalType.DETAILS_TRANSACTION:
+      return <ModalDetailsTransaction />
     case ModalType.EDIT_TRANSACTION:
       return <ModalEditTransaction />
     case ModalType.DELETE_TRANSACTION:
       return <ModalDeleteTransaction />
-    
+
     case ModalType.CREATE_CATEGORY:
       return <ModalCategory />
     case ModalType.LIST_CATEGORY:
@@ -31,6 +34,7 @@ const Modals = () => {
       return <ModalEditCategory />
     case ModalType.DELETE_CATEGORY:
       return <ModalDeleteCategory />
+
     default:
       return null
   }

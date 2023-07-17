@@ -1,9 +1,11 @@
+import { BackDrop, Button, SelectInput } from '@/components'
 import { useCategories, useModal, useTransactions } from '@/hook'
-import { ICreateTransactionDTO, IModal, ModalType, TransactionType } from '@/interfaces'
-import { ArrowCircleDown, ArrowCircleUp, Gear, GearSix, SpinnerGap, X } from 'phosphor-react'
-import React, { FC, use, useEffect, useState } from 'react'
+import { ICreateTransactionDTO, ModalType, TransactionType } from '@/interfaces'
+import { handleMaskValue } from '@/utils'
+import { ArrowCircleDown, ArrowCircleUp, GearSix, SpinnerGap, X } from 'phosphor-react'
+import React, { FC, useEffect, useState } from 'react'
 import * as yup from 'yup'
-import { Button, BackDrop, SelectInput } from '@/components'
+import { Loading } from '..'
 import {
   ContainerInputWrapper,
   ModalBody,
@@ -13,7 +15,6 @@ import {
   TransactionsButtonType,
   TransactionsType
 } from './styles'
-import Loading from '../loading'
 
 const initalState = {
   amount: 0,
@@ -38,25 +39,19 @@ const formValidationSchema = yup.object().shape({
     .string()
     .required('A descrição é obrigatória')
     .min(3, 'A descrição deve ter no mínimo 3 caracteres')
+    .max(20, 'A descrição deve ter no máximo 20 caracteres')
 })
 
 const ModalTransaction: FC = () => {
   const { handleCreateTransaction, state: transactionState } = useTransactions()
   const { state: categoryState } = useCategories()
-  const {handleOpenModal} = useModal()
+  const { handleOpenModal } = useModal()
 
   const { categories, isLoading: isCategoriesLoading } = categoryState
   const { isLoading } = transactionState
   const [state, setState] = useState<ICreateTransactionDTO>(initalState)
   const [masked, setMasked] = useState<string>('R$ 0,00')
   const [errors, setErrors] = useState<typeof initialErrorState>(initialErrorState)
-
-  useEffect(() => {
-    if (state.category === 'new') {
-      handleOpenModal(ModalType.CREATE_CATEGORY)
-    }
-  }, [state.category])
-
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = ev => {
     const { name, value } = ev.target
 
@@ -64,13 +59,6 @@ const ModalTransaction: FC = () => {
       const numericValue = value.replace(/[^0-9]/g, '') || '0'
 
       const floatValue = parseInt(numericValue) / 100
-
-      const formattedValue = floatValue.toLocaleString('pt-BR', {
-        style: 'currency',
-        currency: 'BRL'
-      })
-
-      setMasked(formattedValue)
 
       setState(prev => ({
         ...prev,
@@ -145,6 +133,12 @@ const ModalTransaction: FC = () => {
       setErrors(errorsMessages)
     }
   }
+
+  useEffect(() => {
+    if (!state.amount) return
+
+    handleMaskValue(state.amount, setMasked)
+  }, [state.amount])
 
   if (isLoading || isCategoriesLoading) return <Loading />
 
@@ -225,7 +219,7 @@ const ModalTransaction: FC = () => {
           </Button>
         </ModalBody>
       </ModalTransactionWrapper>
-      <BackDrop onClick={handleCloseModal} />
+      <BackDrop />
     </>
   )
 }

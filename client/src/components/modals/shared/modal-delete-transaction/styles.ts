@@ -1,6 +1,5 @@
 import { css, keyframes, styled } from 'styled-components'
-import * as RadioGroup from '@radix-ui/react-radio-group'
-import { pxToRem } from '../../../../utils'
+import { pxToRem } from '@/utils'
 
 const fadeIn = keyframes`
   0%{
@@ -70,6 +69,19 @@ export const ModalHeader = styled.header`
     svg {
       color: ${theme.green100};
       cursor: pointer;
+    }
+
+    > div {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      cursor: pointer;
+
+      span {
+        color: ${theme.green50};
+        text-transform: uppercase;
+        letter-spacing: 0.1rem;
+      }
     }
   `}
 `

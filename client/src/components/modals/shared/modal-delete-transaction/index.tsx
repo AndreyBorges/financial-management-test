@@ -1,16 +1,19 @@
-import { useModal, useTransactions } from '@/hook'
+import { useMediaQuery, useModal, useTransactions } from '@/hook'
 
-import { X } from 'phosphor-react'
-import React, { FC } from 'react'
+import { CaretLeft, X } from 'phosphor-react'
+import { FC } from 'react'
 
-import { Button, BackDrop } from '@/components'
-import { ModalBody, ModalCategoryWrapper, ModalFooter, ModalHeader } from './styles'
+import { BackDrop, Button } from '@/components'
+import { ModalType } from '@/interfaces'
 import { Loading } from '..'
+import { ModalBody, ModalCategoryWrapper, ModalFooter, ModalHeader } from './styles'
 
 const ModalDeleteTransaction: FC = () => {
   const { state, handleDeleteTransaction } = useTransactions()
-  const { handleOpenModal } = useModal()
+  const isMobile = useMediaQuery('(max-width: 750px)')
+  const { handleOpenModal, state: modalState } = useModal()
   const { isLoading, currentTransaction } = state
+  const { prevModal } = modalState
 
   if (isLoading || !currentTransaction) return <Loading />
 
@@ -19,9 +22,16 @@ const ModalDeleteTransaction: FC = () => {
       <ModalCategoryWrapper>
         <ModalHeader>
           <h1>Deletar Transação</h1>
-          <div onClick={() => handleOpenModal()}>
-            <X size={24} weight='bold' />
-          </div>
+          {ModalType.NULL === prevModal ? (
+            <div onClick={() => handleOpenModal(isMobile ? prevModal : ModalType.NULL)}>
+              <X size={24} weight='bold' />
+            </div>
+          ) : (
+            <div onClick={() => handleOpenModal(prevModal)}>
+              <CaretLeft size={24} weight='bold' />
+              <span>Voltar</span>
+            </div>
+          )}
         </ModalHeader>
 
         <ModalBody>
@@ -38,7 +48,7 @@ const ModalDeleteTransaction: FC = () => {
           </Button>
         </ModalFooter>
       </ModalCategoryWrapper>
-      <BackDrop onClick={handleOpenModal} />
+      <BackDrop />
     </>
   )
 }
