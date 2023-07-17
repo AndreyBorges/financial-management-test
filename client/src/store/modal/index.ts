@@ -1,14 +1,17 @@
 import { atom } from 'jotai'
 import { IModalState, ModalType } from '@/interfaces'
 
-const modalDefaultValue = atom<IModalState>({
+export const modalDefaultValue = {
   modal: ModalType.NULL,
-  prevModal: undefined
-})
+  prevModal: ModalType.NULL,
+  modalFlow: []
+}
+
+const modalDefaultAtom = atom<IModalState>(modalDefaultValue)
 
 export const modalAtom = atom(
-  get => get(modalDefaultValue),
+  get => get(modalDefaultAtom),
   (get, set, update: Partial<IModalState>) => {
-    set(modalDefaultValue, { ...get(modalDefaultValue), ...update })
+    set(modalDefaultAtom, { ...get(modalDefaultAtom), ...update })
   }
 )

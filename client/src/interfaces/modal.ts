@@ -1,14 +1,6 @@
-export type IModal =
-  | 'createTransaction'
-  | 'editTransaciton'
-  | 'deleteTransaction'
-  | 'createCategory'
-  | 'listCategory'
-  | 'editCategory'
-  | 'deleteCategory'
-  | 'modalClose'
-
+import { ModalType } from './enum'
 export interface IModalState {
-  modal: IModal
-  prevModal?: IModal
+  modal: ModalType
+  prevModal: ModalType
+  modalFlow: ModalType[]
 }
