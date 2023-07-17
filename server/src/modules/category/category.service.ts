@@ -14,7 +14,7 @@ export class CategoryService {
   //Serviço Principais
   async create(createCategoryDto: CreateCategoryDto) {
     const categoryAlreadyExists = await this.findOneByCategoryName(
-      createCategoryDto.name,
+      createCategoryDto.name.toLowerCase(),
     );
 
     if (categoryAlreadyExists)
@@ -22,7 +22,9 @@ export class CategoryService {
         `A categoria [${createCategoryDto.name}] já existe!`,
       );
 
-    const newCategory = this.categoryRepository.create(createCategoryDto);
+    const newCategory = this.categoryRepository.create({
+      name: createCategoryDto.name.toLowerCase(),
+    });
 
     await this.categoryRepository.save(newCategory);
 
@@ -39,13 +41,16 @@ export class CategoryService {
 
   async update(id: number, updateCategoryDto: UpdateCategoryDto) {
     const categoryAlreadyExists = await this.findOneByCategoryName(
-      updateCategoryDto.name,
+      updateCategoryDto.name.toLowerCase(),
     );
 
     if (categoryAlreadyExists)
       throw new BadRequestException(`A categoria [${id}] não existe!`);
 
-    await this.categoryRepository.update({ id }, updateCategoryDto);
+    await this.categoryRepository.update(
+      { id },
+      { name: updateCategoryDto.name.toLowerCase() },
+    );
 
     return {
       message: 'Categoria atualizada com sucesso!',

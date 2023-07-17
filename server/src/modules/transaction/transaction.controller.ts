@@ -29,6 +29,12 @@ export class TransactionController {
     return this.transactionService.findAll({
       limit: Number(query.limit) || 5,
       page: Number(query.page) || 1,
+      lte: query.lte,
+      gte: query.gte,
+      category: query.category,
+      amount: query.amount,
+      description: query.description,
+      type: query.type,
     });
   }
 

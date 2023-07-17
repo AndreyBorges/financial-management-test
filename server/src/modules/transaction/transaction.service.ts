@@ -1,7 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Category } from '../category/entities';
+import { Repository, Between, MoreThanOrEqual, LessThanOrEqual } from 'typeorm';
 import {
   CreateTransactionDto,
   SearchTransactionDto,
@@ -9,6 +8,7 @@ import {
 } from './dto';
 import { Transaction } from './entities';
 import { CategoryService } from '../category/category.service';
+import { TransactionType } from './enums';
 
 @Injectable()
 export class TransactionService {
@@ -19,9 +19,10 @@ export class TransactionService {
   ) {}
   async create(createTransactionDto: CreateTransactionDto) {
     const { description, amount, category, type } = createTransactionDto;
+    const lowCaseCategory = category.toLowerCase();
     const currentCategory =
-      (await this.categoryService.findOneByCategoryName(category)) ||
-      (await this.categoryService.create({ name: category })).data;
+      (await this.categoryService.findOneByCategoryName(lowCaseCategory)) ||
+      (await this.categoryService.create({ name: lowCaseCategory })).data;
 
     if (['income', 'outcome'].indexOf(type) === -1)
       throw new BadRequestException('Tipo de transação inválida!');
@@ -44,9 +45,67 @@ export class TransactionService {
     };
   }
 
-  async findAll({ limit, page }: SearchTransactionDto) {
+  async findAll({
+    limit,
+    page,
+    gte,
+    lte,
+    amount,
+    category,
+    description,
+    type,
+  }: SearchTransactionDto) {
+    const params = {
+      gte,
+      lte,
+      description,
+      amount,
+      category,
+      type,
+    };
+
+    const wheres = Object.keys(params).reduce((acc, curr) => {
+      if (params[curr]) {
+        if (curr === 'gte' || curr === 'lte') {
+          if (params['lte'] && params['gte']) {
+            return {
+              ...acc,
+              amount: Between(params['gte'], params['lte']),
+            };
+          }
+
+          if (params['gte'] && !params['lte']) {
+            return {
+              ...acc,
+              amount: MoreThanOrEqual(params['gte']),
+            };
+          }
+
+          if (params['lte'] && !params['gte']) {
+            return {
+              ...acc,
+              amount: LessThanOrEqual(params['lte']),
+            };
+          }
+        }
+
+        if (curr === 'category') {
+          return {
+            ...acc,
+            category: { name: category.toLowerCase() },
+          };
+        }
+        return {
+          ...acc,
+          [curr]: params[curr],
+        };
+      }
+      return acc;
+    }, {});
+
     const [transactions, transactionTot] =
       await this.transactionRepository.findAndCount({
+        where: wheres,
         relations: ['category'],
         skip: (page - 1) * limit,
         take: limit,
