@@ -16,10 +16,15 @@ import { AxiosError } from 'axios'
 const baseUrl = '/transaction'
 
 const getAll = async (
-  { limit, page }: IGetAllTransactionsQueryOptions = { limit: 5, page: 1 }
+  param: IGetAllTransactionsQueryOptions = { limit: 5, page: 1 }
 ): Promise<IAxiosResponse<IGetAllTransactionsResponseDTO>> => {
   try {
-    const { data } = await Api.get(`${baseUrl}?limit=${limit}&page=${page}`)
+    const keys = Object.keys(param)
+    const values = Object.values(param)
+    const queryString = keys.reduce((acc, key, index) => {
+      return `${acc}&${key}=${values[index]}`
+    }, '')
+    const { data } = await Api.get(`${baseUrl}?${queryString}`)
     if (data.error) throw data
     return {
       data,
