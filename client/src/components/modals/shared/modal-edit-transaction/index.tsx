@@ -57,7 +57,7 @@ const ModalEditTransaction: FC = () => {
   } = useTransactions()
   const isMobile = useMediaQuery('(max-width: 750px)')
   const { handleOpenModal, state: modalState } = useModal()
-  const { prevModal } = modalState
+  const { prevModal, modalFlow } = modalState
 
   const { state: categoryState } = useCategories()
   const { categories, isLoading: isCategoriesLoading } = categoryState
@@ -166,7 +166,7 @@ const ModalEditTransaction: FC = () => {
       <ModalTransactionWrapper>
         <ModalHeader>
           <h1>Editar Transação</h1>
-          {ModalType.NULL === prevModal ? (
+          {ModalType.NULL === prevModal || ModalType.EDIT_TRANSACTION === modalFlow[0] ? (
             <div onClick={() => handleOpenModal(isMobile ? prevModal : ModalType.NULL)}>
               <X size={24} weight='bold' />
             </div>
