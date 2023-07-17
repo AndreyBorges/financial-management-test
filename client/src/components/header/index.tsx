@@ -31,11 +31,11 @@ const Header = () => {
         <Button onClick={() => handleOpenModal(ModalType.CREATE_TRANSACTION)}>
           {isDesktop ? (
             <>
-              <CurrencyDollar size={24} />
+              <CurrencyDollar weight='bold' size={24} />
               Adicionar Transação
             </>
           ) : (
-            <CurrencyDollar size={24} />
+            <CurrencyDollar weight='bold' size={24} />
           )}
         </Button>
       </div>
