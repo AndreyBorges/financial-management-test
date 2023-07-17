@@ -1,5 +1,6 @@
+export { default as BackDrop } from './back-drop'
 export { default as Button } from './button'
 export { default as Header } from './header'
-export { default as BackDrop } from './back-drop'
-export { default as SelectInput } from './select'
 export { default as Modals } from './modals'
+export { default as TransactionsTable } from './transactions-table'
+export { default as SelectInput } from './select'
