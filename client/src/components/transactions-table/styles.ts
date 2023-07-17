@@ -3,14 +3,15 @@ import { TransactionType } from '@/interfaces'
 import { pxToRem } from '@/utils'
 
 export const TransactionsContainer = styled.main`
-  ${({ theme }) => css`
-    width: 100%;
-    max-width: 1220px;
-    margin: 4rem auto 0;
-    padding: 0;
-    background: ${theme.grey50};
-    border-radius: 6px;
-  `}
+  width: 100%;
+  max-width: 1220px;
+  margin: 4rem auto 0;
+  padding: 0;
+  border-radius: 6px;
+
+  @media (max-width: 750px) {
+    margin: 2rem auto 0;
+  }
 `
 
 export const TransactionsTableWrapper = styled.table`
@@ -18,10 +19,12 @@ export const TransactionsTableWrapper = styled.table`
     width: calc(100% - 32px);
     border-collapse: separate;
     border-spacing: 0 0.1rem;
-    margin: ${pxToRem(16)} auto 0;
+    margin: ${pxToRem(32)} auto 0;
     box-shadow: 0 0 50px -10px ${theme.gray400};
     overflow: hidden;
     border-radius: 12px;
+    tr {
+    }
 
     td {
       padding: 0 0.5rem;
@@ -41,7 +44,8 @@ export const TransactionsTableWrapper = styled.table`
       &:last-of-type {
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-end;
+        padding-inline: 0 2rem;
         div {
           width: 100%;
           display: flex;
@@ -59,10 +63,20 @@ export const TransactionsTableWrapper = styled.table`
 
     @media (min-width: 425px) {
       td {
+        &:first-of-type {
+          padding: 0 2rem;
+        }
+        &:last-of-type {
+          align-self: flex-end;
+          justify-self: flex-end;
+        }
         padding: 0 1rem;
       }
     }
+
     @media (min-width: 840px) {
+      margin: ${pxToRem(64)} auto 0;
+
       td {
         padding: 0 2rem;
 
@@ -100,8 +114,6 @@ export const PriceHighlight = styled.td<PriceHighlightProps>`
 
     @media (min-width: 750px) {
       max-width: 200px;
-      > div {
-      }
     }
   `}
 `
