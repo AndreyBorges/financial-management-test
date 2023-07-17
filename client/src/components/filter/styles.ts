@@ -158,11 +158,16 @@ export const RangeInputWrapper = styled.div`
   span {
     display: block;
     height: 18px;
+    color: #37aa5c;
+    letter-spacing: 0.1rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   @media (max-width: 750px) {
     span {
-      margin-bottom: .25rem;
+      margin-bottom: 0.25rem;
     }
     margin-top: 0;
 
