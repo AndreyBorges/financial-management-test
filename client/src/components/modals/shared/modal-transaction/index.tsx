@@ -174,6 +174,12 @@ const ModalTransaction: FC = () => {
             <div>
               <SelectBoxWrapper>
                 <SelectInput
+                  value={
+                    {
+                      label: state.category,
+                      value: state.category
+                    }
+                  }
                   options={categories.map(category => ({
                     label: category.name,
                     value: category.name

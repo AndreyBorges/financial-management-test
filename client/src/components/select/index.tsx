@@ -1,5 +1,5 @@
+import { capitalizeString } from '@/utils'
 import { FC, useEffect, useState } from 'react'
-import { ICategory, TransactionType } from '@/interfaces'
 import { StyledSelect } from './styles'
 
 interface ISelectInputProps {
@@ -21,6 +21,7 @@ interface ISelectInputProps {
     label?: string
     value?: string
   }
+  isDisabled?: boolean
 }
 
 const customStyles = {
@@ -64,7 +65,8 @@ const SelectInput: FC<ISelectInputProps> = ({
   backgroundProp,
   colorProp,
   boxShadowProp,
-  value
+  value,
+  isDisabled
 }) => {
   const [currOptions, setCurrOptions] = useState<
     {
@@ -76,7 +78,7 @@ const SelectInput: FC<ISelectInputProps> = ({
   useEffect(() => {
     const currOptions = options.map(option => {
       return {
-        label: option.label,
+        label: capitalizeString(option.label),
         value: option.value
       }
     })
@@ -88,6 +90,13 @@ const SelectInput: FC<ISelectInputProps> = ({
     onChange(opt.value)
   }
 
+  const checkValue = value?.label
+
+  const currValue = {
+    label: checkValue ? capitalizeString(checkValue) : placeholder,
+    value: value?.value
+  }
+
   return (
     <StyledSelect
       placeholder={placeholder}
@@ -96,8 +105,9 @@ const SelectInput: FC<ISelectInputProps> = ({
       name={name}
       id={name}
       instanceId={name}
+      isDisabled={isDisabled}
       options={currOptions}
-      value={value}
+      value={currValue}
       onChange={value => handleChange(value as (typeof currOptions)[0])}
       onBlur={onBlur}
       styles={customStyles[variant]}

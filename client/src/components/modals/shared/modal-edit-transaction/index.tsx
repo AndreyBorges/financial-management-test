@@ -171,7 +171,7 @@ const ModalEditTransaction: FC = () => {
               <X size={24} weight='bold' />
             </div>
           ) : (
-            <div onClick={() => handleOpenModal(prevModal)}>
+            <div onClick={() => handleOpenModal(isMobile ? prevModal : ModalType.NULL)}>
               <CaretLeft size={24} weight='bold' />
               <span>Voltar</span>
             </div>
@@ -204,6 +204,10 @@ const ModalEditTransaction: FC = () => {
             <div>
               <SelectBoxWrapper>
                 <SelectInput
+                  value={{
+                    value: state.category,
+                    label: state.category
+                  }}
                   options={categories.map(category => ({
                     label: category.name,
                     value: category.name

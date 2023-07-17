@@ -5,7 +5,7 @@ import { FC } from 'react'
 
 import { BackDrop } from '@/components'
 import { ModalType, TransactionType } from '@/interfaces'
-import { formatDate, handleMaskValue } from '@/utils'
+import { capitalizeString, formatDate, handleMaskValue } from '@/utils'
 import { Loading } from '..'
 import {
   ModalBody,
@@ -44,7 +44,7 @@ const ModalDetailsCategory: FC = () => {
           </div>
           <div>
             <span>Categoria:</span>
-            <span>{currentTransaction.category}</span>
+            <span>{capitalizeString(currentTransaction.category)}</span>
           </div>
           <ModalTypeTransaction type={currentTransaction.type as TransactionType}>
             <span>Tipo:</span>
