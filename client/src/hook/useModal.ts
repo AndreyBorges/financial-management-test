@@ -49,11 +49,6 @@ const useModal = () => {
     })
   }
 
-  useEffect(() => {
-    console.clear()
-    console.log(state)
-    console.log(state.modalFlow)
-  }, [state])
 
   return {
     handleOpenModal,
