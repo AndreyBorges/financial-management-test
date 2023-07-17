@@ -1,14 +1,10 @@
 import { useMediaQuery, useModal, useTransactions } from '@/hook'
 import { ModalType, TransactionType } from '@/interfaces'
 import { formatDate, handleMaskValue } from '@/utils'
-import { Eye, MagnifyingGlass, PencilSimpleLine, Trash } from 'phosphor-react'
+import { Eye, PencilSimpleLine, Trash } from '@phosphor-icons/react'
 import { FC, useEffect, useState } from 'react'
-import {
-  PriceHighlight,
-  TransactionSearch,
-  TransactionsContainer,
-  TransactionsTableWrapper
-} from './styles'
+import { Filter } from '..'
+import { PriceHighlight, TransactionsContainer, TransactionsTableWrapper } from './styles'
 
 interface IAmountItemProps {
   type: TransactionType
@@ -47,25 +43,31 @@ const TransactionsTable = () => {
 
   return (
     <TransactionsContainer>
-      <TransactionSearch>
-        <input type='text' placeholder='Buscar Transações' />
-        <button>
-          <MagnifyingGlass size={24} weight='bold' />
-          Buscar
-        </button>
-      </TransactionSearch>
+      <Filter />
       <TransactionsTableWrapper>
         <tbody>
           {transactions.map(transaction =>
             isDesktop ? (
               <tr key={transaction.id}>
-                <td width='50%'>{transaction.description}</td>
+                <td width='50%'>
+                  <p> {transaction.description}</p>
+                </td>
                 <AmountItem
                   {...{ amount: transaction.amount, type: transaction.type as TransactionType }}
                 />
-                <td>{transaction.category}</td>
+                <td>
+                  <p>{transaction.category}</p>
+                </td>
                 {isTablet && (
-                  <td>{formatDate({ dateString: String(transaction.createdAt) }).date}</td>
+                  <td>
+                    <p> {formatDate({ dateString: String(transaction.createdAt) }).date}</p>
+                    <p>
+                      <span>
+                        às{' '}
+                        {formatDate({ dateString: String(transaction.createdAt) }).hour}
+                      </span>
+                    </p>
+                  </td>
                 )}
                 <td>
                   <div>
@@ -90,7 +92,9 @@ const TransactionsTable = () => {
               </tr>
             ) : (
               <tr key={transaction.id}>
-                <td width='50%'>{transaction.description}</td>
+                <td width='50%'>
+                  <p> {transaction.description}</p>
+                </td>
                 <AmountItem
                   {...{ amount: transaction.amount, type: transaction.type as TransactionType }}
                 />

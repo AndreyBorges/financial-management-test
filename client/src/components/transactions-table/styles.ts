@@ -24,10 +24,19 @@ export const TransactionsTableWrapper = styled.table`
     border-radius: 12px;
 
     td {
-      padding: 0.25rem 0.5rem;
-      color: ${theme.gray800};
+      padding: 0 0.5rem;
       background: ${theme.gray50};
       height: 82px;
+
+      p {
+        color: ${theme.green600};
+        display: flex;
+        align-items: center;
+        span {
+          margin: 0 auto;
+        }
+        /* justify-content: space-between; */
+      }
 
       &:last-of-type {
         display: flex;
@@ -44,18 +53,18 @@ export const TransactionsTableWrapper = styled.table`
 
       svg {
         cursor: pointer;
-        color: ${theme.green800};
+        color: #37aa5c;
       }
     }
 
     @media (min-width: 425px) {
       td {
-        padding: 0.75rem 1rem;
+        padding: 0 1rem;
       }
     }
     @media (min-width: 840px) {
       td {
-        padding: 1.25rem 2rem;
+        padding: 0 2rem;
 
         &:last-of-type {
           div {
