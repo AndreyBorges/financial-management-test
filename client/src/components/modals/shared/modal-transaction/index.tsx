@@ -2,7 +2,7 @@ import { BackDrop, Button, SelectInput } from '@/components'
 import { useCategories, useModal, useTransactions } from '@/hook'
 import { ICreateTransactionDTO, ModalType, TransactionType } from '@/interfaces'
 import { handleMaskValue } from '@/utils'
-import { ArrowCircleDown, ArrowCircleUp, GearSix, SpinnerGap, X } from 'phosphor-react'
+import { ArrowCircleDown, ArrowCircleUp, GearSix, SpinnerGap, X } from '@phosphor-icons/react'
 import React, { FC, useEffect, useState } from 'react'
 import * as yup from 'yup'
 import { Loading } from '..'
@@ -135,9 +135,7 @@ const ModalTransaction: FC = () => {
   }
 
   useEffect(() => {
-    if (!state.amount) return
-
-    handleMaskValue(state.amount, setMasked)
+    handleMaskValue(state.amount || 0, setMasked)
   }, [state.amount])
 
   if (isLoading || isCategoriesLoading) return <Loading />
@@ -176,7 +174,10 @@ const ModalTransaction: FC = () => {
             <div>
               <SelectBoxWrapper>
                 <SelectInput
-                  options={categories}
+                  options={categories.map(category => ({
+                    label: category.name,
+                    value: category.name
+                  }))}
                   onChange={async (value: string) => {
                     const { name } = { name: 'category' }
 
