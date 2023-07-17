@@ -42,13 +42,7 @@ const SelectInput: FC<ISelectInputProps> = ({ options, onChange, onBlur, default
       }
     })
 
-    setCurrOptions([
-      ...currOptions,
-      {
-        label: 'Crie uma nova categoria',
-        value: 'new'
-      }
-    ])
+    setCurrOptions(currOptions)
   }, [options])
 
   const handleChange = (opt: (typeof currOptions)[0]) => {
