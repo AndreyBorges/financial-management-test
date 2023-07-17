@@ -2,7 +2,7 @@ import { ICreateTransactionDTO, ITransaction, IUpdadeTransactionDTO, ModalType }
 import { transactionsService } from '@/services'
 import { transactionAtom } from '@/store'
 import { useAtom } from 'jotai'
-import useModal from './useModal'
+import { useModal } from '.'
 
 const useTransactions = () => {
   const [state, setState] = useAtom(transactionAtom)
@@ -51,7 +51,6 @@ const useTransactions = () => {
     if (error) setState({ error: error.message })
     handleRefreshTransactions()
     setState({ isLoading: false })
-    handleOpenModal()
   }
 
   const handleUpdateTransaction = async (updateTransactionDTO: IUpdadeTransactionDTO) => {
