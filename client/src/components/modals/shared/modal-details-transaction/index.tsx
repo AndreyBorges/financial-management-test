@@ -1,6 +1,6 @@
 import { useModal, useTransactions } from '@/hook'
 
-import { ArrowCircleDown, ArrowCircleUp, PencilSimpleLine, Trash, X } from 'phosphor-react'
+import { ArrowCircleDown, ArrowCircleUp, PencilSimpleLine, Trash, X } from '@phosphor-icons/react'
 import { FC } from 'react'
 
 import { BackDrop } from '@/components'

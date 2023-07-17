@@ -1,6 +1,6 @@
 import { useCategories, useModal } from '@/hook'
 
-import { CaretLeft } from 'phosphor-react'
+import { CaretLeft } from '@phosphor-icons/react'
 import { FC } from 'react'
 
 import { BackDrop, Button } from '@/components'

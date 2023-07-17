@@ -1,7 +1,7 @@
 import { BackDrop, Button } from '@/components'
 import { useCategories, useModal, useTransactions } from '@/hook'
 import { ICreateCategoryDTO, ModalType } from '@/interfaces'
-import { CaretLeft, SpinnerGap } from 'phosphor-react'
+import { CaretLeft, SpinnerGap } from '@phosphor-icons/react'
 import React, { FC, useState } from 'react'
 import * as yup from 'yup'
 import { Loading } from '..'

@@ -1,6 +1,6 @@
 import { useMediaQuery, useModal, useTransactions } from '@/hook'
 
-import { CaretLeft, X } from 'phosphor-react'
+import { CaretLeft, X } from '@phosphor-icons/react'
 import { FC } from 'react'
 
 import { BackDrop, Button } from '@/components'

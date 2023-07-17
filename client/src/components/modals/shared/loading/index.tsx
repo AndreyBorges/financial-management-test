@@ -1,5 +1,5 @@
 import { BackDrop } from '@/components'
-import { SpinnerGap } from 'phosphor-react'
+import { SpinnerGap } from '@phosphor-icons/react'
 import { LoadingWrapper } from './styles'
 
 const Loading = () => {

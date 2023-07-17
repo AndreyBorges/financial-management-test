@@ -1,6 +1,6 @@
 import { useMediaQuery, useModal } from '@/hook'
 import { ModalType } from '@/interfaces'
-import { CurrencyDollar } from 'phosphor-react'
+import { CurrencyDollar } from '@phosphor-icons/react'
 import { Button } from '..'
 import { HeaderContainer, LogoContainer } from './styles'
 
