@@ -81,4 +81,16 @@ export class CategoryService {
     });
     return foundCategory;
   }
+
+  async countAndUpdateQuantity(id: number) {
+    const category = await this.categoryRepository.findOne({ where: { id } });
+
+    if (!category)
+      throw new BadRequestException(`A categoria [${id}] não existe!`);
+
+    await this.categoryRepository.update(
+      { id },
+      { quantity: category.quantity + 1 },
+    );
+  }
 }
