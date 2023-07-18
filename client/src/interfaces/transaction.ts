@@ -22,7 +22,11 @@ export interface IGetOneOrDeleteTransactionsQueryOptions {
   id: number
 }
 
-export interface IGetAllTransactionsResponseDTO {
+export interface IGetAllTransactionsResponseDTO extends IInfoTransactionsDTO {
+  data: ITransaction[]
+}
+
+export interface IInfoTransactionsDTO {
   size: number
   page: number
   total: number
@@ -30,7 +34,7 @@ export interface IGetAllTransactionsResponseDTO {
   prevPage: number | null
   totalPages: number
   limit: number
-  data: ITransaction[]
+  totalInPage: number
 }
 
 export interface ICreateTransactionDTO {
