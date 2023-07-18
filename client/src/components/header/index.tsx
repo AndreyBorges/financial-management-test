@@ -1,44 +1,18 @@
-import { useMediaQuery, useModal } from '@/hook'
-import { ModalType } from '@/interfaces'
-import { CurrencyDollar } from '@phosphor-icons/react'
-import { Button } from '..'
+import { NavBar } from '..'
 import { HeaderContainer, LogoContainer } from './styles'
 
 const Header = () => {
-  const { handleOpenModal } = useModal()
-
-  const isDesktop = useMediaQuery('(min-width: 750px)')
-
   return (
     <HeaderContainer>
       <div>
         <LogoContainer>
-          {isDesktop ? (
-            <>
-              <img src='logo-icon.png' alt='Logo' />
-              <h1>Gerenciamento Financeiro </h1>
-            </>
-          ) : (
-            <>
-              <img src='logo-icon.png' alt='Logo' />
-              <h1>
-                Gerenciamento <br /> Financeiro
-              </h1>
-            </>
-          )}
+          <div>
+            <img src='logo-icon.png' alt='Logo' />
+            <h1>Gerenciamento Financeiro </h1>
+          </div>
         </LogoContainer>
-
-        <Button onClick={() => handleOpenModal(ModalType.CREATE_TRANSACTION)}>
-          {isDesktop ? (
-            <>
-              <CurrencyDollar weight='bold' size={24} />
-              Adicionar Transação
-            </>
-          ) : (
-            <CurrencyDollar weight='bold' size={24} />
-          )}
-        </Button>
       </div>
+      <NavBar />
     </HeaderContainer>
   )
 }
