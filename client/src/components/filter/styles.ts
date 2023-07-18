@@ -13,6 +13,7 @@ export const FilterWrapper = styled.form`
     flex-direction: column;
     gap: 1rem;
     box-shadow: 0 0 50px -10px ${theme.gray400};
+    margin-top: calc(${pxToRem(90)} + ${pxToRem(64)});
 
     h1 {
       font-size: ${pxToRem(32)};
@@ -23,7 +24,7 @@ export const FilterWrapper = styled.form`
     }
     @media (max-width: 750px) {
       margin: 2rem auto 0;
-
+      margin-top: calc(${pxToRem(90)} + ${pxToRem(64)});
       gap: 0.5rem;
       h1 {
         font-size: ${pxToRem(24)};
@@ -101,51 +102,8 @@ export const FilterButtons = styled.div`
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
 
-    button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      box-shadow: 0 0 0 1px #37aa5c;
-      color: #37aa5c;
-      border-radius: 6px;
-      text-transform: uppercase;
-      font-weight: 600;
-      padding: 0.5rem 1rem;
-      svg {
-        color: #37aa5c;
-      }
-      &:hover {
-        background: #37aa5c;
-        color: ${theme.gray50};
-        svg {
-          color: ${theme.green50};
-        }
-      }
-
-      &:disabled {
-        background: ${theme.gray50};
-        color: ${theme.green600};
-        box-shadow: 0 0 0 1px ${theme.green600};
-        opacity: 0.5;
-
-        svg {
-          color: ${theme.green600};
-
-          &:hover {
-            color: ${theme.green600};
-          }
-        }
-      }
-    }
     @media (max-width: 750px) {
       gap: 0.5rem;
-
-      button {
-        align-self: flex-end;
-        gap: 0.5rem;
-        padding: 0.81rem;
-      }
     }
   `}
 `

@@ -4,7 +4,7 @@ import { capitalizeString, handleMaskValue } from '@/utils'
 import { Broom, MagnifyingGlass } from '@phosphor-icons/react'
 import React, { useEffect, useState } from 'react'
 import * as yup from 'yup'
-import { SelectInput } from '..'
+import { Button, SelectInput } from '..'
 import {
   FilterButtons,
   FilterInputs,
@@ -100,11 +100,6 @@ const Filter = () => {
       setErrors(errorsMessages)
     }
   }
-
-  useEffect(() => {
-    console.clear()
-    console.log({ errors })
-  }, [errors])
 
   useEffect(() => {
     handleMaskValue(filterState.lte || 0, setMaskedLTE)
@@ -216,14 +211,20 @@ const Filter = () => {
           </div>
         </div>
         <FilterButtons>
-          <button type='button' disabled={isLoading} onClick={handleClearFilter}>
+          <Button
+            type='button'
+            disabled={isLoading}
+            onClick={handleClearFilter}
+            variant='outline'
+            color='success'
+          >
             <Broom size={32} weight='bold' />
             Limpar
-          </button>
-          <button type='submit' disabled={isLoading}>
+          </Button>
+          <Button type='submit' disabled={isLoading}>
             <MagnifyingGlass size={32} weight='bold' />
             filtrar
-          </button>
+          </Button>
         </FilterButtons>
       </FilterSelects>
     </FilterWrapper>
