@@ -15,8 +15,9 @@ const buttonBase = styled.button`
   gap: 0.5rem;
   font-size: ${pxToRem(12)};
   @media (min-width: 650px) {
+    gap: 1rem;
     font-size: ${pxToRem(14)};
-    padding: 1rem 2.5rem;
+    padding: 0.75rem 1rem;
   }
 `
 
@@ -62,16 +63,16 @@ export const ButtonWrapper = styled(buttonBase)<IBasicButtonProps>`
         return css`
           background: transparent;
           color: ${color === 'success'
-            ? theme.success
+            ? theme.green450
             : color === 'error'
             ? theme.error
             : color === 'warning'
             ? theme.warning
             : theme.gray50};
           transition: background 0.2s;
-          border: 1px solid
+          box-shadow: 0 0 0 1px
             ${color === 'success'
-              ? theme.success
+              ? theme.green450
               : color === 'error'
               ? theme.error
               : color === 'warning'
@@ -79,17 +80,17 @@ export const ButtonWrapper = styled(buttonBase)<IBasicButtonProps>`
               : theme.gray50};
 
           &:hover {
-            color: ${theme.textPrimary};
+            color: ${theme.gray50};
             background: ${color === 'success'
-              ? theme.success
+              ? theme.green450
               : color === 'error'
               ? theme.error
               : color === 'warning'
               ? theme.success
               : 'transparent'};
-            border: 1px solid
+            box-shadow: 0 0 0 1px
               ${color === 'success'
-                ? theme.success
+                ? theme.green450
                 : color === 'error'
                 ? theme.error
                 : color === 'warning'
@@ -99,12 +100,14 @@ export const ButtonWrapper = styled(buttonBase)<IBasicButtonProps>`
         `
       default:
         return css`
-          background: ${theme.green800};
+          background: ${theme.green450};
           color: ${theme.gray50};
-          transition: background 0.2s;
+          svg {
+            color: ${theme.gray50};
+          }
 
           &:hover {
-            background: ${theme.green900};
+            background: ${theme.green500};
           }
         `
     }
