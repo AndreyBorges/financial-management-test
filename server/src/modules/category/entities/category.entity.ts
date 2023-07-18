@@ -18,6 +18,9 @@ export class Category {
   @JoinColumn()
   transaction: Transaction[];
 
+  @Column({ default: 0 })
+  quantity: number;
+
   @Column({ unique: true })
   name: string;
 
