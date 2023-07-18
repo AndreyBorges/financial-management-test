@@ -18,10 +18,14 @@ const useTransactions = () => {
   const handleGetAllTransactions = async (param?: IGetAllTransactionsQueryOptions) => {
     setState({ isLoading: true })
     const { data, error, success } = await transactionsService.getAll(param)
-    if (success && data)
+    if (success && data) {
+      const { data: transactions, ...info } = data
+
       setState({
-        transactions: data.data
+        transactions,
+        info
       })
+    }
     if (error) setState({ error: error.message })
     setState({ isLoading: false })
   }
@@ -50,6 +54,7 @@ const useTransactions = () => {
     setState({ isLoading: true })
 
     const { data, error, success } = await transactionsService.remove({ id })
+    handleOpenModal(ModalType.NULL)
     if (success && data) setState({ success: data.message })
     if (error) setState({ error: error.message })
     handleRefreshTransactions()
