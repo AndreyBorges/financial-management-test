@@ -79,24 +79,20 @@ const ModalDetailsCategory: FC = () => {
         </ModalBody>
         <ModalFooter>
           <div>
-            <span>
-              <PencilSimpleLine
-                size={32}
-                weight='bold'
-                onClick={() => {
-                  handleOpenModal(ModalType.EDIT_TRANSACTION)
-                }}
-              />
+            <span
+              onClick={() => {
+                handleOpenModal(ModalType.EDIT_TRANSACTION)
+              }}
+            >
+              <PencilSimpleLine size={32} weight='bold' />
               Editar
             </span>
-            <span>
-              <Trash
-                size={32}
-                weight='bold'
-                onClick={() => {
-                  handleOpenModal(ModalType.DELETE_TRANSACTION)
-                }}
-              />
+            <span
+              onClick={() => {
+                handleOpenModal(ModalType.DELETE_TRANSACTION)
+              }}
+            >
+              <Trash size={32} weight='bold' />
               Deletar
             </span>
           </div>

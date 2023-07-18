@@ -28,7 +28,7 @@ export const ModalDetailsTransactionWrapper = styled.div`
   ${({ theme }) => css`
     position: fixed;
     width: 100%;
-    background: ${theme.green700};
+    background: ${theme.gray50};
     border-top-right-radius: 32px;
     border-top-left-radius: 32px;
     z-index: 3;
@@ -40,7 +40,7 @@ export const ModalDetailsTransactionWrapper = styled.div`
     animation: ${fadeIn} 0.5s ease-in-out forwards;
 
     h1 {
-      color: ${theme.green100};
+      color: ${theme.green800};
       font-size: 1.25rem;
     }
 
@@ -54,7 +54,7 @@ export const ModalDetailsTransactionWrapper = styled.div`
       border-radius: 6px;
       animation: ${fadeInModal} 0.5s ease-in-out forwards;
       h1 {
-        color: ${theme.green100};
+        color: ${theme.green800};
         font-size: 1.5rem;
       }
     }
@@ -70,7 +70,7 @@ export const ModalHeader = styled.header`
       display: flex;
       align-items: center;
       svg {
-        color: ${theme.green100};
+        color: ${theme.green800};
         cursor: pointer;
       }
     }
@@ -85,7 +85,7 @@ export const ModalBody = styled.div`
     flex-direction: column;
     gap: 1.25rem;
     margin-block: 1rem;
-    color: ${theme.green50};
+    color: ${theme.green800};
 
     > div {
       display: flex;
@@ -117,7 +117,7 @@ export const ModalFooter = styled.footer`
     text-align: center;
     gap: 1.5rem;
     p {
-      color: ${theme.green50};
+      color: ${theme.green800};
       font-weight: 600;
     }
     > div {
@@ -130,10 +130,10 @@ export const ModalFooter = styled.footer`
         flex-direction: column;
         align-items: center;
         gap: 0.5rem;
-        color: ${theme.green50};
+        color: ${theme.green800};
 
         svg {
-          color: ${theme.green50};
+          color: ${theme.green800};
         }
       }
     }
@@ -152,7 +152,7 @@ export const ModalTypeTransaction = styled.div<IModalTypeTransactionProps>`
       gap: 0.5rem;
 
       svg {
-        color: ${type === 'income' ? theme.green400 : theme.red400};
+        color: ${type === 'income' ? theme.green450 : theme.red400};
       }
     }
   `}

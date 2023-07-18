@@ -7,6 +7,7 @@ import { BackDrop, Button } from '@/components'
 import { ICategory, ModalType } from '@/interfaces'
 import { Loading } from '..'
 import { ModalBody, ModalCategoryWrapper, ModalHeader } from './styles'
+import { capitalizeString } from '@/utils'
 
 const CategoryItem: FC<ICategory> = category => {
   const { handleGetCurrentCategory } = useCategories()
@@ -14,10 +15,10 @@ const CategoryItem: FC<ICategory> = category => {
 
   return (
     <li key={category.id}>
-      <span>{category.name}</span>
+      <span>{capitalizeString(category.name)}</span>
       <div>
         <PencilSimpleLine
-          size={32}
+          size={24}
           weight='bold'
           onClick={() => {
             handleGetCurrentCategory(category)
@@ -25,7 +26,7 @@ const CategoryItem: FC<ICategory> = category => {
           }}
         />
         <X
-          size={32}
+          size={24}
           weight='bold'
           onClick={() => {
             handleGetCurrentCategory(category)

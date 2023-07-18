@@ -204,6 +204,10 @@ const ModalEditTransaction: FC = () => {
             <div>
               <SelectBoxWrapper>
                 <SelectInput
+                  variant='secondary'
+                  backgroundProp='#fff'
+                  colorProp='#37AA5C'
+                  boxShadowProp='0 0 0 1px #37AA5C'
                   value={{
                     value: state.category,
                     label: state.category

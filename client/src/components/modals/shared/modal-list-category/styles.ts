@@ -1,6 +1,5 @@
 import { css, keyframes, styled } from 'styled-components'
-import * as RadioGroup from '@radix-ui/react-radio-group'
-import { pxToRem } from '../../../../utils'
+import { pxToRem } from '@/utils'
 
 const fadeIn = keyframes`
   0%{
@@ -28,7 +27,7 @@ export const ModalCategoryWrapper = styled.div`
   ${({ theme }) => css`
     position: fixed;
     width: 100%;
-    background: ${theme.green700};
+    background: ${theme.gray50};
     border-top-right-radius: 32px;
     border-top-left-radius: 32px;
     z-index: 3;
@@ -40,7 +39,7 @@ export const ModalCategoryWrapper = styled.div`
     animation: ${fadeIn} 0.5s ease-in-out forwards;
 
     h1 {
-      color: ${theme.green100};
+      color: ${theme.green800};
       font-size: 1.25rem;
     }
 
@@ -54,7 +53,6 @@ export const ModalCategoryWrapper = styled.div`
       border-radius: 6px;
       animation: ${fadeInModal} 0.5s ease-in-out forwards;
       h1 {
-        color: ${theme.green100};
         font-size: 1.5rem;
       }
     }
@@ -68,7 +66,7 @@ export const ModalHeader = styled.header`
     justify-content: space-between;
 
     svg {
-      color: ${theme.green100};
+      color: ${theme.green800};
       cursor: pointer;
     }
 
@@ -79,7 +77,7 @@ export const ModalHeader = styled.header`
       cursor: pointer;
 
       span {
-        color: ${theme.green50};
+        color: ${theme.green800};
         text-transform: uppercase;
         letter-spacing: 0.1rem;
       }
@@ -97,46 +95,37 @@ export const ModalBody = styled.div`
     flex-direction: column;
     gap: 1rem;
     margin-block: 1rem;
-    color: ${theme.green50};
-    &::-webkit-scrollbar {
-      width: 12px; /* width of the entire scrollbar */
-    }
-
-    &::-webkit-scrollbar-track {
-      background: ${theme.green700}; /* color of the tracking area */
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background-color: ${theme.sucessDark}; /* color of the scroll thumb */
-      border-radius: 20px; /* roundness of the scroll thumb */
-      border: 4px solid ${theme.green700};
-    }
+    color: ${theme.green800};
 
     ul {
       display: flex;
       flex-direction: column;
       padding-right: 12px;
-      gap: 1rem;
       li {
         display: flex;
         align-items: center;
         justify-content: space-between;
 
+        border-bottom: 1px solid ${theme.gray200};
+        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+        &:last-child {
+          border-bottom: none;
+        }
+
         width: 100%;
         > div {
           display: flex;
           align-items: center;
-          gap: 1rem;
+          gap: 1.5rem;
 
           svg {
             cursor: pointer;
           }
         }
         span {
-          font-weight: bold;
           font-size: ${pxToRem(20)};
           letter-spacing: 0.1rem;
-          text-transform: uppercase;
         }
       }
     }

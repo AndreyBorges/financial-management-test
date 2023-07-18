@@ -27,7 +27,7 @@ export const ModalCategoryWrapper = styled.div`
   ${({ theme }) => css`
     position: fixed;
     width: 100%;
-    background: ${theme.green700};
+    background: ${theme.gray50};
     border-top-right-radius: 32px;
     border-top-left-radius: 32px;
     z-index: 3;
@@ -39,7 +39,7 @@ export const ModalCategoryWrapper = styled.div`
     animation: ${fadeIn} 0.5s ease-in-out forwards;
 
     h1 {
-      color: ${theme.green100};
+      color: ${theme.green800};
       font-size: 1.25rem;
     }
 
@@ -53,7 +53,7 @@ export const ModalCategoryWrapper = styled.div`
       border-radius: 6px;
       animation: ${fadeInModal} 0.5s ease-in-out forwards;
       h1 {
-        color: ${theme.green100};
+        color: ${theme.green800};
         font-size: 1.5rem;
       }
     }
@@ -67,7 +67,7 @@ export const ModalHeader = styled.header`
     justify-content: space-between;
 
     svg {
-      color: ${theme.green100};
+      color: ${theme.green800};
       cursor: pointer;
     }
 
@@ -78,7 +78,7 @@ export const ModalHeader = styled.header`
       cursor: pointer;
 
       span {
-        color: ${theme.green50};
+        color: ${theme.green800};
         text-transform: uppercase;
         letter-spacing: 0.1rem;
       }
@@ -94,7 +94,7 @@ export const ModalBody = styled.div`
     flex-direction: column;
     gap: 1rem;
     margin-block: 1rem;
-    color: ${theme.green50};
+    color: ${theme.green800};
     p,
     strong {
       font-size: ${pxToRem(18)};

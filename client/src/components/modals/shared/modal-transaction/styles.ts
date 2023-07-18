@@ -41,7 +41,7 @@ export const ModalTransactionWrapper = styled.div`
   ${({ theme }) => css`
     position: fixed;
     width: 100%;
-    background: ${theme.green700};
+    background: ${theme.gray50};
     border-top-right-radius: 32px;
     border-top-left-radius: 32px;
     z-index: 3;
@@ -53,7 +53,7 @@ export const ModalTransactionWrapper = styled.div`
     animation: ${fadeIn} 0.5s ease-in-out forwards;
 
     h1 {
-      color: ${theme.green100};
+      color: ${theme.green800};
       font-size: 1.25rem;
     }
 
@@ -67,7 +67,6 @@ export const ModalTransactionWrapper = styled.div`
       border-radius: 6px;
       animation: ${fadeInModal} 0.5s ease-in-out forwards;
       h1 {
-        color: ${theme.green100};
         font-size: 1.5rem;
       }
     }
@@ -78,6 +77,7 @@ export const TransactionsType = styled(RadioGroup.Root)`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
+  margin-bottom: 1rem;
 `
 
 interface TransactionsButtonTypeProps {
@@ -86,9 +86,9 @@ interface TransactionsButtonTypeProps {
 
 export const TransactionsButtonType = styled(RadioGroup.Item)<TransactionsButtonTypeProps>`
   ${({ theme, variant }) => css`
-    background: ${theme.green700};
     filter: brightness(1.4);
-    color: ${theme.textPrimary};
+    color: ${theme.green800};
+    box-shadow: 0 0 0 1px ${theme.green800};
     border: 0;
     display: flex;
     align-items: center;
@@ -110,22 +110,19 @@ export const TransactionsButtonType = styled(RadioGroup.Item)<TransactionsButton
     &[data-state='unchecked']:hover {
       filter: initial;
       &:nth-of-type(1) {
-        background: ${theme.green200};
+        transform: scale(0.98);
       }
       &:nth-of-type(2) {
-        background: ${theme.errorLight};
+        transform: scale(0.98);
       }
-    }
-
-    &[data-state='unchecked'] {
-      color: ${theme.gray50};
     }
 
     &[data-state='checked'] {
-      color: ${theme.gray50};
-      background: ${variant === 'income' ? theme.green400 : theme.red400};
+      color: ${variant === 'income' ? theme.green500 : theme.red400};
+      background: transparent;
+      box-shadow: 0 0 0 1px ${variant === 'income' ? theme.green500 : theme.red400};
       svg {
-        color: ${theme.gray50};
+        color: ${variant === 'income' ? theme.green500 : theme.red400};
       }
     }
   `}
@@ -138,7 +135,7 @@ export const ModalHeader = styled.header`
     justify-content: space-between;
 
     svg {
-      color: ${theme.green100};
+      color: ${theme.green800};
       cursor: pointer;
     }
   `}
@@ -148,10 +145,9 @@ export const ModalBody = styled.form`
   ${({ theme }) => css`
     display: flex;
     flex-direction: column;
-    gap: 1rem;
 
     h2 {
-      color: ${theme.green100};
+      color: ${theme.green800};
       font-size: 1.25rem;
     }
 
@@ -177,14 +173,15 @@ export const ContainerInputWrapper = styled.div`
         width: 100%;
         border-radius: ${pxToRem(6)};
         border: 0;
-        background: ${theme.green900};
-        color: ${theme.green50};
+        background: ${theme.gray50};
+        box-shadow: 0 0 0 1px ${theme.green450};
+        color: ${theme.green800};
         padding: 1.25rem 1rem;
         font-size: ${pxToRem(16)};
 
         &::placeholder {
-          color: ${theme.green50};
-          opacity: 0.5;
+          color: ${theme.green800};
+          opacity: 0.9;
         }
       }
     }
@@ -192,24 +189,33 @@ export const ContainerInputWrapper = styled.div`
       display: block;
       height: ${pxToRem(22)};
       margin: 0.25rem 0 0.25rem 0.5rem;
-      color: ${theme.green50};
+      color: ${theme.green800};
     }
   `}
 `
 
 export const SelectBoxWrapper = styled.div`
   ${({ theme }) => css`
-    display: grid;
-    grid-template-columns: 1fr 42px;
-    gap: 1rem;
-    align-items: center;
-    justify-content: center;
+    height: 88px;
+    margin-bottom: 0.5rem;
+    display: flex;
+    flex-direction: column;
 
-    > svg {
-      color: ${theme.green50};
-      cursor: pointer;
-      opacity: 0.8;
+    > div {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem;
+      align-items: center;
+      justify-content: space-between;
+      > svg {
+        color: ${theme.green450};
+        cursor: pointer;
+      }
+    }
 
-     
+    > span {
+      margin: 0.5rem !important;
+    }
   `}
 `

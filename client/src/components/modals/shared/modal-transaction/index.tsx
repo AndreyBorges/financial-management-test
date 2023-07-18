@@ -171,35 +171,37 @@ const ModalTransaction: FC = () => {
               />
               <span>{errors.amount}</span>
             </div>
-            <div>
-              <SelectBoxWrapper>
-                <SelectInput
-                  value={
-                    {
-                      label: state.category,
-                      value: state.category
-                    }
-                  }
-                  options={categories.map(category => ({
-                    label: category.name,
-                    value: category.name
-                  }))}
-                  onChange={async (value: string) => {
-                    const { name } = { name: 'category' }
-
-                    await validate(name, value)
-                    setState(prev => ({
-                      ...prev,
-                      category: value
-                    }))
-                  }}
-                  onBlur={handleBlur}
-                />
-                <GearSix size={42} onClick={() => handleOpenModal(ModalType.LIST_CATEGORY)} />
-              </SelectBoxWrapper>
-              <span>{errors.category}</span>
-            </div>
           </ContainerInputWrapper>
+          <SelectBoxWrapper>
+            <div>
+              <SelectInput
+                variant='secondary'
+                backgroundProp='#fff'
+                colorProp='#37AA5C'
+                boxShadowProp='0 0 0 1px #37AA5C'
+                value={{
+                  label: state.category,
+                  value: state.category
+                }}
+                options={categories.map(category => ({
+                  label: category.name,
+                  value: category.name
+                }))}
+                onChange={async (value: string) => {
+                  const { name } = { name: 'category' }
+
+                  await validate(name, value)
+                  setState(prev => ({
+                    ...prev,
+                    category: value
+                  }))
+                }}
+                onBlur={handleBlur}
+              />
+              <GearSix size={42} onClick={() => handleOpenModal(ModalType.LIST_CATEGORY)} />
+            </div>
+            <span>{errors.category}</span>
+          </SelectBoxWrapper>
 
           <TransactionsType>
             <TransactionsButtonType
