@@ -5,12 +5,12 @@ import { pxToRem } from '@/utils'
 export const TransactionsContainer = styled.main`
   width: 100%;
   max-width: 1220px;
-  margin: 4rem auto 0;
+  margin: 2rem auto 0;
   padding: 0;
   border-radius: 6px;
 
   @media (max-width: 750px) {
-    margin: 2rem auto 0;
+    margin: 1rem auto 0;
   }
 `
 
@@ -23,11 +23,9 @@ export const TransactionsTableWrapper = styled.table`
     box-shadow: 0 0 50px -10px ${theme.gray400};
     overflow: hidden;
     border-radius: 12px;
-    tr {
-    }
 
     td {
-      padding: 0 0.5rem;
+      padding: 0 0.75rem;
       background: ${theme.gray50};
       height: 82px;
 
@@ -38,14 +36,14 @@ export const TransactionsTableWrapper = styled.table`
         span {
           margin: 0 auto;
         }
-        /* justify-content: space-between; */
+      }
+      &:first-of-type {
+        padding-inline: 2rem 0;
       }
 
       &:last-of-type {
-        display: flex;
         align-items: center;
         justify-content: flex-end;
-        padding-inline: 0 2rem;
         div {
           width: 100%;
           display: flex;
@@ -53,39 +51,56 @@ export const TransactionsTableWrapper = styled.table`
           justify-content: center;
           gap: 1rem;
         }
+        width: 68px;
+      }
+
+      @media (min-width: 750px) {
+        &:last-of-type {
+          padding-right: 26px;
+          width: auto;
+        }
       }
 
       svg {
         cursor: pointer;
-        color: #37aa5c;
+        color: ${theme.green450};
       }
-    }
-
-    @media (min-width: 425px) {
-      td {
-        &:first-of-type {
-          padding: 0 2rem;
-        }
-        &:last-of-type {
-          align-self: flex-end;
-          justify-self: flex-end;
-        }
-        padding: 0 1rem;
-      }
-    }
-
-    @media (min-width: 840px) {
-      margin: ${pxToRem(64)} auto 0;
-
-      td {
-        padding: 0 2rem;
-
-        &:last-of-type {
-          div {
-            display: flex;
+      > div {
+        :hover {
+          &:first-of-type {
+            svg {
+              color: ${theme.warning};
+            }
+          }
+          &:last-of-type {
+            svg {
+              color: ${theme.error};
+            }
           }
         }
       }
+    }
+  `}
+`
+
+export const CategoryTag = styled.td`
+  ${({ theme }) => css`
+    margin: 0 auto;
+    min-width: 200px;
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    p {
+      padding-inline: 0.5rem;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      border: 1px solid ${theme.green450};
+      height: 24px;
+      background: ${theme.green450};
+      color: ${theme.gray50} !important;
+      letter-spacing: 0.1rem;
     }
   `}
 `
@@ -138,6 +153,98 @@ export const TransactionSearch = styled.div`
       &::placeholder {
         color: ${theme.green800};
         opacity: 0.6;
+      }
+    }
+  `}
+`
+
+export const Navigation = styled.footer`
+  ${({ theme }) => css`
+    padding-inline: 1rem;
+    width: 100%;
+    display: flex;
+    margin-block: 4rem 2rem;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1rem;
+
+    > div {
+      display: flex;
+      gap: 1rem;
+      height: 100%;
+    }
+
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      box-shadow: 0 0 0 2px ${theme.gray50};
+      color: ${theme.gray50};
+      border-radius: 6px;
+      text-transform: uppercase;
+      font-weight: 600;
+      font-size: ${pxToRem(16)};
+      width: 42px;
+      height: 42px;
+      svg {
+        color: ${theme.gray50};
+      }
+      &:hover {
+        background: ${theme.gray50};
+        color: ${theme.green450};
+
+        svg {
+          color: ${theme.green450};
+        }
+      }
+
+      &.active {
+        background: ${theme.gray50};
+        color: ${theme.green450};
+      }
+
+      &:disabled {
+        background: ${theme.gray50};
+        color: ${theme.green600};
+        box-shadow: none;
+        opacity: 0.4;
+
+        svg {
+          color: ${theme.green600};
+
+          &:hover {
+            color: ${theme.green600};
+          }
+        }
+      }
+    }
+
+    @media (max-width: 750px) {
+      margin-block: 2rem 1rem;
+      justify-content: space-between;
+
+      > div {
+        gap: 0.5rem;
+        button {
+          padding: 0.75rem 1.25rem;
+        }
+      }
+    }
+  `}
+`
+
+export const NewTransactionButtonWrapper = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    padding: 0 2rem;
+
+    button {
+      background: transparent;
+      &:hover {
+        background: transparent;
       }
     }
   `}

@@ -1,11 +1,25 @@
-import { useMediaQuery, useModal, useTransactions } from '@/hook'
+import { useFilter, useMediaQuery, useModal, useTransactions } from '@/hook'
 import { ModalType, TransactionType } from '@/interfaces'
 import { capitalizeString, formatDate, handleMaskValue } from '@/utils'
-import { Eye, PencilSimpleLine, Trash } from '@phosphor-icons/react'
+import {
+  CaretLeft,
+  CaretRight,
+  Eye,
+  PencilSimpleLine,
+  Plus,
+  Trash
+} from '@phosphor-icons/react'
 import { FC, useEffect, useState } from 'react'
-import { Filter, Loading } from '..'
-import { PriceHighlight, TransactionsContainer, TransactionsTableWrapper } from './styles'
+import { Button, Filter, Loading } from '..'
 import { TransactionsNotFound } from './shared'
+import {
+  CategoryTag,
+  Navigation,
+  NewTransactionButtonWrapper,
+  PriceHighlight,
+  TransactionsContainer,
+  TransactionsTableWrapper
+} from './styles'
 
 interface IAmountItemProps {
   type: TransactionType
@@ -40,29 +54,42 @@ const TransactionsTable = () => {
   const isTablet = useMediaQuery('(min-width: 900px)')
   const { handleOpenModal } = useModal()
   const { handleSetCurrentTransaction, state } = useTransactions()
-  const { transactions, isLoading } = state
+  const { transactions, isLoading, info } = state
 
+  const { handleChangePageWithFilter } = useFilter()
 
   return (
     <TransactionsContainer>
       <Filter />
-      {isLoading ? (
+      <NewTransactionButtonWrapper>
+        <Button onClick={() => handleOpenModal(ModalType.CREATE_TRANSACTION)}>
+          {isDesktop ? (
+            <>
+              <Plus weight='bold' size={24} />
+              Adicionar Transação
+            </>
+          ) : (
+            <Plus weight='bold' size={24} />
+          )}
+        </Button>
+      </NewTransactionButtonWrapper>
+      {isLoading || !info ? (
         <Loading />
-      ) : transactions.length > 0 ? (
+      ) : info?.totalInPage !== 0 ? (
         <TransactionsTableWrapper>
           <tbody>
             {transactions.map(transaction =>
               isDesktop ? (
                 <tr key={transaction.id}>
                   <td width='50%'>
-                    <p> {transaction.description}</p>
+                    <p> {capitalizeString(transaction.description)}</p>
                   </td>
                   <AmountItem
                     {...{ amount: transaction.amount, type: transaction.type as TransactionType }}
                   />
-                  <td>
+                  <CategoryTag>
                     <p>{capitalizeString(transaction.category)}</p>
-                  </td>
+                  </CategoryTag>
                   {isTablet && (
                     <td>
                       <p> {formatDate({ dateString: String(transaction.createdAt) }).date}</p>
@@ -75,29 +102,33 @@ const TransactionsTable = () => {
                   )}
                   <td>
                     <div>
-                      <PencilSimpleLine
-                        size={32}
-                        weight='bold'
-                        onClick={() => {
-                          handleSetCurrentTransaction(transaction)
-                          handleOpenModal(ModalType.EDIT_TRANSACTION)
-                        }}
-                      />
-                      <Trash
-                        size={32}
-                        weight='bold'
-                        onClick={() => {
-                          handleSetCurrentTransaction(transaction)
-                          handleOpenModal(ModalType.DELETE_TRANSACTION)
-                        }}
-                      />
+                      <div>
+                        <PencilSimpleLine
+                          size={32}
+                          weight='bold'
+                          onClick={() => {
+                            handleSetCurrentTransaction(transaction)
+                            handleOpenModal(ModalType.EDIT_TRANSACTION)
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <Trash
+                          size={32}
+                          weight='bold'
+                          onClick={() => {
+                            handleSetCurrentTransaction(transaction)
+                            handleOpenModal(ModalType.DELETE_TRANSACTION)
+                          }}
+                        />
+                      </div>
                     </div>
                   </td>
                 </tr>
               ) : (
                 <tr key={transaction.id}>
                   <td width='60%'>
-                    <p> {transaction.description}</p>
+                    <p>{capitalizeString(transaction.description)}</p>
                   </td>
                   <AmountItem
                     {...{ amount: transaction.amount, type: transaction.type as TransactionType }}
@@ -120,6 +151,49 @@ const TransactionsTable = () => {
       ) : (
         <TransactionsNotFound />
       )}
+      <Navigation>
+        <button
+          disabled={!info?.prevPage}
+          onClick={() => handleChangePageWithFilter(info?.prevPage as number)}
+        >
+          <CaretLeft size={isDesktop ? 24 : 18} weight='bold' />
+        </button>
+        <div>
+          {!info?.nextPage && (
+            <button onClick={() => handleChangePageWithFilter((info?.prevPage as number) - 1)}>
+              {(info?.prevPage as number) - 1}
+            </button>
+          )}
+
+          {info?.prevPage && (
+            <button onClick={() => handleChangePageWithFilter(info?.prevPage as number)}>
+              {info?.prevPage}
+            </button>
+          )}
+          <button
+            onClick={() => handleChangePageWithFilter(info?.page as number)}
+            className='active'
+          >
+            {info?.page}
+          </button>
+          {info?.nextPage && (
+            <button onClick={() => handleChangePageWithFilter(info?.nextPage as number)}>
+              {info?.nextPage}
+            </button>
+          )}
+          {!info?.prevPage && (
+            <button onClick={() => handleChangePageWithFilter((info?.nextPage as number) + 1)}>
+              {(info?.nextPage as number) + 1}
+            </button>
+          )}
+        </div>
+        <button
+          disabled={!info?.nextPage}
+          onClick={() => handleChangePageWithFilter(info?.nextPage as number)}
+        >
+          <CaretRight size={isDesktop ? 24 : 18} weight='bold' />
+        </button>
+      </Navigation>
     </TransactionsContainer>
   )
 }
