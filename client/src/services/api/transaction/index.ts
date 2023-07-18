@@ -16,7 +16,7 @@ import { AxiosError } from 'axios'
 const baseUrl = '/transaction'
 
 const getAll = async (
-  param: IGetAllTransactionsQueryOptions = { limit: 5, page: 1 }
+  param: IGetAllTransactionsQueryOptions = {}
 ): Promise<IAxiosResponse<IGetAllTransactionsResponseDTO>> => {
   try {
     const keys = Object.keys(param)
