@@ -16,3 +16,8 @@ export enum ModalType {
 
   NULL = 'modalClose'
 }
+
+export enum NavBarItem {
+  TRANSACTIONS = 'transactions',
+  REPORTS = 'reports'
+}
