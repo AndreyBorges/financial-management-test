@@ -20,9 +20,9 @@ export class TransactionService {
   async create(createTransactionDto: CreateTransactionDto) {
     const { description, amount, category, type } = createTransactionDto;
     const lowCaseCategory = category.toLowerCase();
-    const currentCategory =
-      (await this.categoryService.findOneByCategoryName(lowCaseCategory)) ||
-      (await this.categoryService.create({ name: lowCaseCategory })).data;
+    const currentCategory = await this.categoryService.findOneByCategoryName(
+      lowCaseCategory,
+    );
 
     if (['income', 'outcome'].indexOf(type) === -1)
       throw new BadRequestException('Tipo de transação inválida!');
@@ -35,6 +35,8 @@ export class TransactionService {
     });
 
     await this.transactionRepository.save(newTransaction);
+
+    await this.categoryService.countAndUpdateQuantity(currentCategory.id);
 
     return {
       message: 'Transação cadastrada com sucesso!',
@@ -103,7 +105,7 @@ export class TransactionService {
       return acc;
     }, {});
 
-    const [transactions, transactionTot] =
+    const [transactions, transactionInPageTot] =
       await this.transactionRepository.findAndCount({
         where: wheres,
         relations: ['category'],
@@ -111,13 +113,16 @@ export class TransactionService {
         take: limit,
       });
 
-    const totalPages = Math.ceil(transactionTot / limit);
+    const transactionTot = await this.transactionRepository.count();
+
+    const totalPages = Math.ceil(transactionInPageTot / limit);
     const nextPage = page < totalPages ? page + 1 : null;
     const prevPage = page > 1 ? page - 1 : null;
 
     return {
       size: transactions.length,
       page,
+      totalInPage: transactionInPageTot,
       total: transactionTot,
       nextPage,
       prevPage,
