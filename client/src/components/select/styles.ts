@@ -20,7 +20,7 @@ export const StyledSelect = styled(Select)<IStyledSelectProps>`
       box-shadow: ${boxShadowProp ? boxShadowProp : 'none'};
     }
     div {
-      color: ${colorProp ? colorProp : theme.green50};
+      color: ${colorProp ? colorProp : theme.green800};
     }
   `}
 `
