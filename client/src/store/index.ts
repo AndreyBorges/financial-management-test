@@ -1,4 +1,5 @@
-export * from './transactios'
 export * from './categories'
-export * from './modal'
 export * from './filter'
+export * from './modal'
+export * from './nav-bar'
+export * from './transactios'
