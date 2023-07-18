@@ -32,11 +32,32 @@ const useFilter = () => {
     }
   }
 
+  const handleChangePageWithFilter = async (page: number) => {
+    const keys = Object.keys(filterState)
+    const values = Object.values(filterState)
+
+    const filteredState = keys.reduce((acc, key, index) => {
+      if (values[index]) {
+        return {
+          ...acc,
+          [key]: values[index]
+        }
+      }
+      return acc
+    }, {})
+    try {
+      await handleGetAllTransactions({ ...filteredState, page })
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
   return {
     filterState,
     setFilterState,
     handleClearFilter,
-    handleSubmit
+    handleSubmit,
+    handleChangePageWithFilter
   }
 }
 
