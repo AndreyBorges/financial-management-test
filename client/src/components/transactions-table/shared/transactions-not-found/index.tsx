@@ -1,10 +1,12 @@
+import { useFilter, useModal, useTransactions } from '@/hook'
+import { ModalType } from '@/interfaces'
 import { WarningCircle } from '@phosphor-icons/react'
 import { TransactionsNotFoundWrapper } from './styles'
-import { useFilter, useTransactions } from '@/hook'
 
 const TransactionsNotFound = () => {
   const { handleClearFilter } = useFilter()
-  const { handleRefreshTransactions } = useTransactions()
+  const { handleRefreshTransactions, state } = useTransactions()
+  const { handleOpenModal } = useModal()
 
   const handleReloadTransactions = () => {
     handleClearFilter()
@@ -15,10 +17,18 @@ const TransactionsNotFound = () => {
       <WarningCircle size={128} weight='bold' />
       <div>
         <p>Nenhuma transação encontrada.</p>
-        <p>Tente novamente!</p>
+        <p>{state.info?.total ? 'Tente novamente!' : 'Adicione uma nova transação!'}</p>
       </div>
 
-      <button onClick={handleReloadTransactions}>Recarregar transações</button>
+      <button
+        onClick={
+          state.info?.total
+            ? handleReloadTransactions
+            : () => handleOpenModal(ModalType.CREATE_TRANSACTION)
+        }
+      >
+        {state.info?.total ? 'Recarregar transações' : 'Adicionar transação'}
+      </button>
     </TransactionsNotFoundWrapper>
   )
 }

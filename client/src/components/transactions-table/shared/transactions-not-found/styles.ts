@@ -5,7 +5,7 @@ export const TransactionsNotFoundWrapper = styled.section`
   ${({ theme }) => css`
     width: calc(100% - 32px);
     max-width: 1220px;
-    margin: 1rem auto;
+    margin: 4rem auto;
     padding: ${pxToRem(60)};
     border-radius: 12px;
     background: ${theme.gray50};
@@ -51,12 +51,13 @@ export const TransactionsNotFoundWrapper = styled.section`
         background: #37aa5c;
         color: ${theme.gray50};
         svg {
-          color: ${theme.green50};
+          color: ${theme.green800};
         }
       }
     }
     @media (max-width: 750px) {
       gap: 1rem;
+      margin: 2rem auto;
 
       > div {
         gap: 0.5rem;
