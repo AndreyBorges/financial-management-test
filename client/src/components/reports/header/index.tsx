@@ -1,41 +1,13 @@
-import { useTransactions } from '@/hook'
-import { ITransaction } from '@/interfaces'
+import { useReports } from '@/hook'
 import { handleMaskValue } from '@/utils'
 import { ArrowCircleDown, ArrowCircleUp, CurrencyDollar } from '@phosphor-icons/react'
-import { useEffect, useState } from 'react'
 import { SummaryCard, SummaryContainer } from './styles'
 
 const HeaderReports = () => {
-  const { state, handleGetAllTransactions } = useTransactions()
-
-  const [newTransactions, setNewTransactions] = useState<ITransaction[]>([])
-
-  const { transactions, info } = state
-  const totalIncome = newTransactions.reduce((acc, transaction) => {
-    if (transaction.type === 'income') {
-      return acc + transaction.amount
-    }
-    return acc
-  }, 0)
-  const totalOutcome = newTransactions.reduce((acc, transaction) => {
-    if (transaction.type === 'outcome') {
-      return acc + transaction.amount
-    }
-    return acc
-  }, 0)
-
-  const total = totalIncome - totalOutcome
-
-  const isOwed = totalIncome > totalOutcome
-
-  useEffect(() => {
-    if (!info) return
-    handleGetAllTransactions({
-      page: 1,
-      limit: info?.total
-    })
-    setNewTransactions(transactions)
-  }, [])
+  const { state } = useReports()
+  const totalIncome = state?.balance.income as number
+  const totalOutcome = state?.balance.outcome as number
+  const total = state?.balance.total as number
 
   return (
     <SummaryContainer>
