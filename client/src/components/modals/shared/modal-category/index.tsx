@@ -68,7 +68,7 @@ const ModalCategory: FC = () => {
       await formValidationSchema.validate(state, { abortEarly: false })
       handleCreateCategory(state)
       setState(initalState)
-      handleOpenModal(ModalType.LIST_CATEGORY, true)
+      handleOpenModal(ModalType.LIST_CATEGORY)
     } catch (err) {
       const errors = err as yup.ValidationError
       const errorsMessages = errors.inner.reduce((acc, error) => {
@@ -85,7 +85,7 @@ const ModalCategory: FC = () => {
       <ModalCategoryWrapper>
         <ModalHeader>
           <h1>Nova Categoria</h1>
-          <div onClick={() => handleOpenModal(ModalType.LIST_CATEGORY, true)}>
+          <div onClick={() => handleOpenModal(ModalType.LIST_CATEGORY)}>
             <CaretLeft size={24} weight='bold' />
             <span>Voltar</span>
           </div>
