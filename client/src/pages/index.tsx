@@ -1,4 +1,4 @@
-import { Header, Layout, Modals, TransactionsTable } from '@/components'
+import { Layout, Modals, TransactionsTable } from '@/components'
 
 const Home = () => {
   return (
