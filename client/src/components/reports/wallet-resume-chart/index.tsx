@@ -1,40 +1,31 @@
 import { BoxChart } from '@/components'
 
+import { useReports } from '@/hook'
+import { Line } from 'react-chartjs-2'
 import { useTheme } from 'styled-components'
 import { WalletResumeChartWrapper } from './styles'
-import { Line } from 'react-chartjs-2'
 
 const WalletResumeChart = () => {
   const theme = useTheme()
+  const { state } = useReports()
+  const labels = state?.walletChart.label as string[]
+  const data = state?.walletChart.data as Array<number[]>
+  const label = ['Entrada', 'Saida', 'Média']
+  const color = [theme.success, theme.error, theme.warning]
+
   return (
     <WalletResumeChartWrapper>
       <BoxChart title='Resumo de carteira'>
         <Line
           data={{
-            labels: ['Salario', 'Comida', 'Investimento'],
-            datasets: [
-              {
-                label: 'Entrada',
-                data: [2, 4, 8],
-                backgroundColor: [theme.green450],
-                borderColor: [theme.green450],
-                borderWidth: 3
-              },
-              {
-                label: 'Media',
-                data: [9, 2, 18],
-                backgroundColor: [theme.warning],
-                borderColor: [theme.warning],
-                borderWidth: 3
-              },
-              {
-                label: 'Saida',
-                data: [90, 12, 18],
-                backgroundColor: [theme.error],
-                borderColor: [theme.error],
-                borderWidth: 3
-              }
-            ]
+            labels,
+            datasets: data.map((item, index) => ({
+              label: label[index],
+              data: item,
+              backgroundColor: color[index],
+              borderColor: color[index],
+              borderWidth: 3
+            }))
           }}
           options={{
             maintainAspectRatio: false,
