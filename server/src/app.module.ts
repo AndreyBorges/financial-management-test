@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TransactionModule, CategoryModule, ReportsModule } from './modules';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { SeedModule } from './seed/seed.module';
+import { SeedService } from './seed/seed.service';
 
 @Module({
   imports: [
@@ -13,6 +15,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     TransactionModule,
     CategoryModule,
     ReportsModule,
+    SeedModule,
   ],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private readonly seedService: SeedService) {
+    // this.seedService.save();
+  }
+}
