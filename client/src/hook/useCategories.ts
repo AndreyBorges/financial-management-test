@@ -2,10 +2,12 @@ import { ICategory, ICreateCategoryDTO, IUpdadeCategoryDTO } from '@/interfaces'
 import { categoriesService } from '@/services'
 import { categoryAtom } from '@/store'
 import { useAtom } from 'jotai'
+import { useTransactions } from '.'
 
 const useCategories = () => {
   const [state, setState] = useAtom(categoryAtom)
   const { refreshData } = state
+  const { handleRefreshTransactions } = useTransactions()
 
   const handleGetAllCategories = async () => {
     setState({ isLoading: true })
@@ -36,6 +38,8 @@ const useCategories = () => {
     if (success && data) setState({ success: data.message })
     if (error) setState({ error: error.message })
     handleRefreshCategory()
+    handleRefreshTransactions()
+
     setState({ isLoading: false })
   }
 
