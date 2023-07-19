@@ -4,7 +4,6 @@ import {
   WrapperReports,
   WalletResumeChart,
   TotalTransactionsByCategoryChart,
-  MostPopulousCategoryChart,
   MostExpensiveTransactionChart,
 } from '@/components'
 import { SecondChartWrapper } from '@/components/reports/wrapper/styles'
@@ -17,7 +16,6 @@ const Reports = () => {
         <WalletResumeChart />
         <SecondChartWrapper>
           <TotalTransactionsByCategoryChart />
-          <MostPopulousCategoryChart />
           <MostExpensiveTransactionChart />
         </SecondChartWrapper>
       </WrapperReports>
