@@ -17,6 +17,11 @@ const ModalDeleteTransaction: FC = () => {
 
   if (isLoading || !currentTransaction) return <Loading />
 
+  const handleCloseModal = () => {
+    handleOpenModal(ModalType.NULL)
+    handleDeleteTransaction(currentTransaction.id)
+  }
+
   return (
     <>
       <ModalCategoryWrapper>
@@ -40,7 +45,7 @@ const ModalDeleteTransaction: FC = () => {
           <strong>OBS.: Não será possivel reverter esta ação.</strong>
         </ModalBody>
         <ModalFooter>
-          <Button variant='primary' onClick={() => handleDeleteTransaction(currentTransaction.id)}>
+          <Button variant='primary' onClick={handleCloseModal}>
             Sim
           </Button>
           <Button variant='tertiary' onClick={() => handleOpenModal()}>
