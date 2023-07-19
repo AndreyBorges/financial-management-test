@@ -8,7 +8,6 @@ export { default as NavBar } from './nav-bar'
 export { default as SelectInput } from './select'
 export { default as TransactionsTable } from './transactions-table'
 export { default as Layout } from './layout'
-export { default as Chart } from './chart'
 export { default as BoxChart } from './box-chart'
 
 export * from './reports'
