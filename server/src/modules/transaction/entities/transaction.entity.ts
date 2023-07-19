@@ -24,7 +24,9 @@ export class Transaction {
   @Column()
   type: TransactionType;
 
-  @ManyToOne(() => Category, (category) => category.transaction)
+  @ManyToOne(() => Category, (category) => category.transactions, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn()
   category: Category;
 
