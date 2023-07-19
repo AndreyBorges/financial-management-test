@@ -17,15 +17,21 @@ export const LoadingWrapper = styled.div`
   ${({ theme }) => css`
     width: calc(100% - 32px);
     max-width: 1220px;
-    margin: 1rem auto;
     padding: ${pxToRem(60)};
     border-radius: 12px;
     background: ${theme.gray50};
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 2rem;
     box-shadow: 0 0 50px -10px ${theme.gray400};
+    height: 416px;
+    margin: 2rem auto;
+
+    @media (max-width: 750px) {
+      margin: 1rem auto;
+    }
 
     p {
       font-size: ${pxToRem(24)};
