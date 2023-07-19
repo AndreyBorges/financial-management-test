@@ -1,14 +1,20 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, Between, MoreThanOrEqual, LessThanOrEqual } from 'typeorm';
+import {
+  Between,
+  FindOptionsWhere,
+  ILike,
+  LessThanOrEqual,
+  MoreThanOrEqual,
+  Repository,
+} from 'typeorm';
+import { CategoryService } from '../category/category.service';
 import {
   CreateTransactionDto,
   SearchTransactionDto,
   UpdateTransactionDto,
 } from './dto';
 import { Transaction } from './entities';
-import { CategoryService } from '../category/category.service';
-import { TransactionType } from './enums';
 
 @Injectable()
 export class TransactionService {
@@ -27,6 +33,10 @@ export class TransactionService {
     if (['income', 'outcome'].indexOf(type) === -1)
       throw new BadRequestException('Tipo de transação inválida!');
 
+    if (!currentCategory) {
+      throw new BadRequestException('Categoria não existe!');
+    }
+
     const newTransaction = this.transactionRepository.create({
       description,
       amount,
@@ -37,7 +47,6 @@ export class TransactionService {
     await this.transactionRepository.save(newTransaction);
 
     await this.categoryService.countAndUpdateQuantity(currentCategory.id);
-
     return {
       message: 'Transação cadastrada com sucesso!',
       data: {
@@ -57,53 +66,33 @@ export class TransactionService {
     description,
     type,
   }: SearchTransactionDto) {
-    const params = {
-      gte,
-      lte,
-      description,
-      amount,
-      category,
-      type,
-    };
+    const wheres:
+      | FindOptionsWhere<Transaction>
+      | FindOptionsWhere<Transaction>[] = {};
 
-    const wheres = Object.keys(params).reduce((acc, curr) => {
-      if (params[curr]) {
-        if (curr === 'gte' || curr === 'lte') {
-          if (params['lte'] && params['gte']) {
-            return {
-              ...acc,
-              amount: Between(params['gte'], params['lte']),
-            };
-          }
+    if (gte && lte) {
+      wheres.amount = Between(gte, lte);
+    } else if (gte) {
+      wheres.amount = MoreThanOrEqual(gte);
+    } else if (lte) {
+      wheres.amount = LessThanOrEqual(lte);
+    }
 
-          if (params['gte'] && !params['lte']) {
-            return {
-              ...acc,
-              amount: MoreThanOrEqual(params['gte']),
-            };
-          }
+    if (category) {
+      wheres.category = { name: ILike(`%${category.toLowerCase()}%`) };
+    }
 
-          if (params['lte'] && !params['gte']) {
-            return {
-              ...acc,
-              amount: LessThanOrEqual(params['lte']),
-            };
-          }
-        }
+    if (description) {
+      wheres.description = ILike(`%${description}%`);
+    }
 
-        if (curr === 'category') {
-          return {
-            ...acc,
-            category: { name: category.toLowerCase() },
-          };
-        }
-        return {
-          ...acc,
-          [curr]: params[curr],
-        };
-      }
-      return acc;
-    }, {});
+    if (amount) {
+      wheres.amount = amount;
+    }
+
+    if (type) {
+      wheres.type = type;
+    }
 
     const [transactions, transactionInPageTot] =
       await this.transactionRepository.findAndCount({
