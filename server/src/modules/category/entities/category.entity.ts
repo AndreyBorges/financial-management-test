@@ -5,7 +5,7 @@ import {
   JoinColumn,
   OneToMany,
   PrimaryGeneratedColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
 } from 'typeorm';
 import { Transaction } from '../../transaction/entities';
 
@@ -23,6 +23,9 @@ export class Category {
 
   @Column({ unique: true })
   name: string;
+
+  @Column({ default: null })
+  color: string;
 
   @CreateDateColumn()
   createdAt: Date;
