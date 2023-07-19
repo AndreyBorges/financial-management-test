@@ -51,8 +51,9 @@ const TransactionsTable = () => {
 
   const { handleChangePageWithFilter } = useFilter()
 
-  const renderNextpage = !info?.prevPage && info?.nextPage && info?.nextPage !== info?.page
-  const renderPrevPage = !info?.nextPage && info?.prevPage && info?.prevPage !== info?.page
+  const pageNumbers = Array.from({ length: info?.totalPages as number }, (_, index) => index + 1)
+
+  const page = info?.page as number
 
   return (
     <TransactionsContainer>
@@ -155,35 +156,19 @@ const TransactionsTable = () => {
           >
             <CaretLeft size={isDesktop ? 24 : 18} weight='bold' />
           </button>
-          <div>
-            {renderPrevPage && (
-              <button onClick={() => handleChangePageWithFilter((info?.prevPage as number) - 1)}>
-                {(info?.prevPage as number) - 1}
-              </button>
-            )}
 
-            {info?.prevPage && (
-              <button onClick={() => handleChangePageWithFilter(info?.prevPage as number)}>
-                {info?.prevPage}
+          {pageNumbers.map(pg =>
+            Math.abs(page - pg) < 2 ? (
+              <button
+                key={pg}
+                onClick={() => handleChangePageWithFilter(pg)}
+                className={pg === page ? 'active' : ''}
+              >
+                {pg}
               </button>
-            )}
-            <button
-              onClick={() => handleChangePageWithFilter(info?.page as number)}
-              className='active'
-            >
-              {info?.page}
-            </button>
-            {info?.nextPage && (
-              <button onClick={() => handleChangePageWithFilter(info?.nextPage as number)}>
-                {info?.nextPage}
-              </button>
-            )}
-            {renderNextpage && (
-              <button onClick={() => handleChangePageWithFilter((info?.nextPage as number) + 1)}>
-                {(info?.nextPage as number) + 1}
-              </button>
-            )}
-          </div>
+            ) : null
+          )}
+
           <button
             disabled={!info?.nextPage}
             onClick={() => handleChangePageWithFilter(info?.nextPage as number)}
