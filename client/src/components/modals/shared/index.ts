@@ -1,4 +1,5 @@
 export { default as Loading } from './loading'
+export { default as CategoryNotFound } from './category-not-found'
 
 export { default as ModalTransaction } from './modal-transaction'
 export { default as ModalDetailsTransaction } from './modal-details-transaction'
