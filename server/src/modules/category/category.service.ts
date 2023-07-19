@@ -70,7 +70,9 @@ export class CategoryService {
       where: { id },
     });
     if (!categoryAlreadyExist)
-      throw new BadRequestException(`A categoria [${id}] não existe!`);
+      throw new BadRequestException(
+        `A categoria [${categoryAlreadyExist.name}] não existe!`,
+      );
     await this.categoryRepository.delete(id);
     return {
       message: 'Categoria removida com sucesso!',
