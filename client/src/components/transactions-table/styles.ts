@@ -90,7 +90,8 @@ export const CategoryTag = styled.td`
     display: flex;
     height: 100%;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
+    
     p {
       padding-inline: 0.5rem;
       align-items: center;
@@ -240,6 +241,7 @@ export const NewTransactionButtonWrapper = styled.div`
     width: 100%;
     justify-content: flex-end;
     padding: 0 2rem;
+    color: ${theme.green800};
 
     button {
       background: transparent;
