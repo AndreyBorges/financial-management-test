@@ -17,7 +17,7 @@ export const StyledWrapper = styled.main`
 `
 
 export const SecondChartWrapper = styled.div`
-  max-width: calc(1220px - 2.25rem);
+  max-width: calc(1220px);
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   justify-content: center;
@@ -25,31 +25,47 @@ export const SecondChartWrapper = styled.div`
 
   padding: 0px;
   > div {
-    padding: 30px;
-    margin-left: 2px;
+    padding: 32px;
+
+    &:last-of-type {
+      grid-column: 3;
+    }
   }
 
   @media (max-width: 1280px) {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
+    flex-direction: column;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     gap: 1rem;
     > div {
       justify-content: center;
       align-items: center;
+
+      &:last-of-type {
+        grid-column: span 2;
+      }
+    }
+  }
+
+  @media (max-width: 820px) {
+    grid-template-columns: 1fr;
+    > div {
+      &:last-of-type {
+        grid-column: 1;
+      }
     }
   }
 
   @media (max-width: 425px) {
     gap: 0.5rem;
+    background: red;
     > div {
       padding: 24px;
     }
   }
 
   @media (max-width: 375px) {
-    > div {
-      padding: 6px;
-    }
   }
 `

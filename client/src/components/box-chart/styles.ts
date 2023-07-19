@@ -9,13 +9,18 @@ export const BoxChartWrapper = styled.div`
     gap: 1rem;
     border-radius: 6px;
     padding: 2rem;
+    box-shadow: 0 0 30px -10px ${theme.gray400};
+
+    @media (max-width: 425px) {
+      padding: 24px;
+    }
   `}
 `
 
 export const BoxChartTitle = styled.h2`
   ${({ theme }) => css`
-    letter-spacing: 0.1rem;
     color: ${theme.green700};
+    height: 60px;
   `}
 `
 
