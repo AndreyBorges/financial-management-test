@@ -1,14 +1,14 @@
 import { ModalType } from '@/interfaces'
 import { modalAtom, modalDefaultValue } from '@/store'
 import { useAtom } from 'jotai'
-import useMediaQuery from './useMediaQuery'
+import { useMediaQuery } from '.'
 
 const useModal = () => {
   const [state, setState] = useAtom(modalAtom)
   const isMobile = useMediaQuery('(max-width: 750px)')
   const { modalFlow } = state
 
-  const handleOpenModal = (type: ModalType = ModalType.NULL, isLast: boolean = false) => {
+  const handleOpenModal = (type: ModalType = ModalType.NULL) => {
     if (type === ModalType.NULL) return setState(modalDefaultValue)
 
     const lastModals = [
