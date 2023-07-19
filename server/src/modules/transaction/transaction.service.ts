@@ -15,6 +15,7 @@ import {
   UpdateTransactionDto,
 } from './dto';
 import { Transaction } from './entities';
+import { TransactionType } from './enums';
 
 @Injectable()
 export class TransactionService {
@@ -181,6 +182,106 @@ export class TransactionService {
     await this.transactionRepository.delete(id);
     return {
       message: 'Transação removida com sucesso!',
+    };
+  }
+
+  async calculateBalance() {
+    const transactions = await this.transactionRepository.find();
+
+    const income = transactions
+      .filter((transaction) => transaction.type === 'income')
+      .reduce((acc, cur) => acc + cur.amount, 0);
+
+    const outcome = transactions
+      .filter((transaction) => transaction.type === 'outcome')
+      .reduce((acc, cur) => acc + cur.amount, 0);
+
+    const total = income - outcome;
+
+    return {
+      income,
+      outcome,
+      total,
+    };
+  }
+
+  async findByDate(date: Date) {
+    const transactions = await this.transactionRepository.find({
+      where: {
+        createdAt: Between(
+          new Date(date.getFullYear(), date.getMonth(), date.getDate()),
+          new Date(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate() + 1,
+            0,
+            0,
+            0,
+            0,
+          ),
+        ),
+      },
+      relations: {
+        category: false,
+      },
+    });
+
+    return {
+      data: transactions,
+    };
+  }
+
+  async findAllByCategory(category: string) {
+    const transactions = await this.transactionRepository.find({
+      where: {
+        category: {
+          name: ILike(`%${category}%`),
+        },
+      },
+      relations: {
+        category: false,
+      },
+    });
+
+    return {
+      data: transactions,
+    };
+  }
+
+  async findAllByType(type: TransactionType) {
+    const transactions = await this.transactionRepository.find({
+      where: {
+        type,
+      },
+      relations: {
+        category: false,
+      },
+    });
+
+    return {
+      data: transactions,
+    };
+  }
+
+  async findMoreExpensiveByTypeAndCategory({ type, category }, limit: number) {
+    const transactions = await this.transactionRepository.find({
+      where: {
+        type,
+        category: {
+          name: ILike(`%${category}%`),
+        },
+      },
+      order: {
+        amount: 'DESC',
+      },
+      take: limit,
+      relations: {
+        category: false,
+      },
+    });
+
+    return {
+      data: transactions,
     };
   }
 }
