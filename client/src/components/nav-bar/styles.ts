@@ -10,7 +10,7 @@ export const Container = styled.nav`
       display: flex;
       justify-content: space-around;
       align-items: center;
-      padding: 0 10px 0 16px;
+      padding: 0 16px 0 10px;
 
       li {
         min-width: 50%;
