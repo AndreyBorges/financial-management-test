@@ -7,11 +7,11 @@ export const SummaryContainer = styled.section`
 
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0.5rem;
+  gap: 1.5rem;
 
   @media (min-width: 750px) {
     grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
+    gap: 1.5rem;
   }
 `
 

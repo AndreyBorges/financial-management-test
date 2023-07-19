@@ -38,32 +38,30 @@ const HeaderReports = () => {
   }, [])
 
   return (
-    <div>
-      <SummaryContainer>
-        <SummaryCard color='income'>
-          <header>
-            <span>Entradas</span>
-            <ArrowCircleUp size={32} color='#00b37e' />
-          </header>
+    <SummaryContainer>
+      <SummaryCard color='income'>
+        <header>
+          <span>Entradas</span>
+          <ArrowCircleUp size={32} color='#00b37e' />
+        </header>
 
-          <strong>{handleMaskValue(totalIncome)}</strong>
-        </SummaryCard>
-        <SummaryCard color='outcome'>
-          <header>
-            <span>Saida</span>
-            <ArrowCircleDown size={32} color='#f75a68' />
-          </header>
-          <strong>{handleMaskValue(totalOutcome)}</strong>
-        </SummaryCard>
-        <SummaryCard variant='green' color='total'>
-          <header>
-            <span>total</span>
-            <CurrencyDollar size={32} color='#FFF' />
-          </header>
-          <strong>{handleMaskValue(total)}</strong>
-        </SummaryCard>
-      </SummaryContainer>
-    </div>
+        <strong>{handleMaskValue(totalIncome)}</strong>
+      </SummaryCard>
+      <SummaryCard color='outcome'>
+        <header>
+          <span>Saida</span>
+          <ArrowCircleDown size={32} color='#f75a68' />
+        </header>
+        <strong>{handleMaskValue(totalOutcome)}</strong>
+      </SummaryCard>
+      <SummaryCard variant='green' color='total'>
+        <header>
+          <span>total</span>
+          <CurrencyDollar size={32} color='#FFF' />
+        </header>
+        <strong>{handleMaskValue(total)}</strong>
+      </SummaryCard>
+    </SummaryContainer>
   )
 }
 
