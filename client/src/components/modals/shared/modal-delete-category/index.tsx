@@ -1,7 +1,7 @@
 import { useCategories, useModal } from '@/hook'
 
 import { CaretLeft } from '@phosphor-icons/react'
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 
 import { BackDrop, Button } from '@/components'
 import { ModalType } from '@/interfaces'
@@ -15,13 +15,12 @@ const ModalDeleteCategory: FC = () => {
   const { isLoading, currentCategory } = state
 
   if (isLoading || !currentCategory) return <Loading />
-
   return (
     <>
       <ModalCategoryWrapper>
         <ModalHeader>
           <h1>Deletar Categoria</h1>
-          <div onClick={() => handleOpenModal(ModalType.LIST_CATEGORY, true)}>
+          <div onClick={() => handleOpenModal(ModalType.LIST_CATEGORY)}>
             <CaretLeft size={24} weight='bold' />
             <span>Voltar</span>
           </div>
@@ -29,7 +28,11 @@ const ModalDeleteCategory: FC = () => {
 
         <ModalBody>
           <p>Tem certeza que deseja excluir esta categoria?</p>
-          <span>{currentCategory?.name}</span>
+          <p>
+            Se esta categoria for apagada, todas as transações envolvendo{' '}
+            <span>{currentCategory?.quantity}</span> serão apagadas tambem!
+          </p>
+
           <strong>OBS.: Não será possivel reverter esta ação.</strong>
         </ModalBody>
         <ModalFooter>
@@ -37,7 +40,7 @@ const ModalDeleteCategory: FC = () => {
             variant='primary'
             onClick={() => {
               handleDeleteCategory(Number(currentCategory.id))
-              handleOpenModal(prevModal, true)
+              handleOpenModal(prevModal)
             }}
           >
             Sim
