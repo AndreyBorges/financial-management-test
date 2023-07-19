@@ -43,6 +43,10 @@ export const ModalCategoryWrapper = styled.div`
       font-size: 1.25rem;
     }
 
+    span {
+      color: ${theme.green800};
+    }
+
     @media (min-width: 650px) {
       left: 50%;
       top: 50%;
