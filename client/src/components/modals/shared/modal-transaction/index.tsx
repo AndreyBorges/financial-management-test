@@ -2,7 +2,7 @@ import { BackDrop, Button, SelectInput } from '@/components'
 import { useCategories, useModal, useTransactions } from '@/hook'
 import { ICreateTransactionDTO, ModalType, TransactionType } from '@/interfaces'
 import { handleMaskValue } from '@/utils'
-import { ArrowCircleDown, ArrowCircleUp, GearSix, SpinnerGap, X } from '@phosphor-icons/react'
+import { ArrowCircleDown, ArrowCircleUp, GearSix, Plus, SpinnerGap, X } from '@phosphor-icons/react'
 import React, { FC, useEffect, useState } from 'react'
 import * as yup from 'yup'
 import { Loading } from '..'
@@ -44,7 +44,7 @@ const formValidationSchema = yup.object().shape({
 
 const ModalTransaction: FC = () => {
   const { handleCreateTransaction, state: transactionState } = useTransactions()
-  const { state: categoryState } = useCategories()
+  const { state: categoryState, handleRefreshCategory } = useCategories()
   const { handleOpenModal } = useModal()
 
   const { categories, isLoading: isCategoriesLoading } = categoryState
@@ -198,7 +198,11 @@ const ModalTransaction: FC = () => {
                 }}
                 onBlur={handleBlur}
               />
-              <GearSix size={42} onClick={() => handleOpenModal(ModalType.LIST_CATEGORY)} />
+              {categories.length === 0 ? (
+                <Plus size={42} onClick={() => handleOpenModal(ModalType.CREATE_CATEGORY)} />
+              ) : (
+                <GearSix size={42} onClick={() => handleOpenModal(ModalType.LIST_CATEGORY)} />
+              )}
             </div>
             <span>{errors.category}</span>
           </SelectBoxWrapper>
