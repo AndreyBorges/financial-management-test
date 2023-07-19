@@ -21,6 +21,7 @@ export const BoxChartTitle = styled.h2`
   ${({ theme }) => css`
     color: ${theme.green700};
     height: 60px;
+    width: 100%;
   `}
 `
 
