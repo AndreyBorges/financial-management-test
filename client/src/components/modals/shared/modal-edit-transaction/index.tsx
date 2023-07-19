@@ -61,7 +61,7 @@ const ModalEditTransaction: FC = () => {
 
   const { state: categoryState } = useCategories()
   const { categories, isLoading: isCategoriesLoading } = categoryState
-  const { isLoading, currentTransaction } = transactionState
+  const { isLoading, currentTransaction, transactions } = transactionState
 
   const [state, setState] = useState<IUpdadeTransactionDTO>({
     category: currentTransaction?.category,
@@ -158,6 +158,10 @@ const ModalEditTransaction: FC = () => {
   useEffect(() => {
     handleMaskValue(state.amount || 0, setMasked)
   }, [state.amount])
+
+  useEffect(() => {
+    if (transactions.length === 0) handleOpenModal()
+  }, [transactions])
 
   if (isLoading || isCategoriesLoading) return <Loading />
 
