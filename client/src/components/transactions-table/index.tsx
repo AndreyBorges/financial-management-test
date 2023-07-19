@@ -1,14 +1,7 @@
 import { useFilter, useMediaQuery, useModal, useTransactions } from '@/hook'
 import { ModalType, TransactionType } from '@/interfaces'
 import { capitalizeString, formatDate, handleMaskValue } from '@/utils'
-import {
-  CaretLeft,
-  CaretRight,
-  Eye,
-  PencilSimpleLine,
-  Plus,
-  Trash
-} from '@phosphor-icons/react'
+import { CaretLeft, CaretRight, Eye, PencilSimpleLine, Plus, Trash } from '@phosphor-icons/react'
 import { FC, useEffect, useState } from 'react'
 import { Button, Filter, Loading } from '..'
 import { TransactionsNotFound } from './shared'
@@ -57,6 +50,8 @@ const TransactionsTable = () => {
   const { transactions, isLoading, info } = state
 
   const { handleChangePageWithFilter } = useFilter()
+
+  const renderNextpage = !info?.prevPage && (info?.nextPage as number) + 1 === info?.totalPages
 
   return (
     <TransactionsContainer>
@@ -151,49 +146,54 @@ const TransactionsTable = () => {
       ) : (
         <TransactionsNotFound />
       )}
-      <Navigation>
-        <button
-          disabled={!info?.prevPage}
-          onClick={() => handleChangePageWithFilter(info?.prevPage as number)}
-        >
-          <CaretLeft size={isDesktop ? 24 : 18} weight='bold' />
-        </button>
-        <div>
-          {!info?.nextPage && (
-            <button onClick={() => handleChangePageWithFilter((info?.prevPage as number) - 1)}>
-              {(info?.prevPage as number) - 1}
-            </button>
-          )}
-
-          {info?.prevPage && (
-            <button onClick={() => handleChangePageWithFilter(info?.prevPage as number)}>
-              {info?.prevPage}
-            </button>
-          )}
+      {info?.totalPages && info?.totalPages > 1 ? (
+        <Navigation>
           <button
-            onClick={() => handleChangePageWithFilter(info?.page as number)}
-            className='active'
+            disabled={!info?.prevPage}
+            onClick={() => handleChangePageWithFilter(info?.prevPage as number)}
           >
-            {info?.page}
+            <CaretLeft size={isDesktop ? 24 : 18} weight='bold' />
           </button>
-          {info?.nextPage && (
-            <button onClick={() => handleChangePageWithFilter(info?.nextPage as number)}>
-              {info?.nextPage}
+          <div>
+            {!info?.nextPage ||
+              (info.prevPage === 0 && (
+                <button onClick={() => handleChangePageWithFilter((info?.prevPage as number) - 1)}>
+                  {(info?.prevPage as number) - 1}
+                </button>
+              ))}
+
+            {info?.prevPage && (
+              <button onClick={() => handleChangePageWithFilter(info?.prevPage as number)}>
+                {info?.prevPage}
+              </button>
+            )}
+            <button
+              onClick={() => handleChangePageWithFilter(info?.page as number)}
+              className='active'
+            >
+              {info?.page}
             </button>
-          )}
-          {!info?.prevPage && (
-            <button onClick={() => handleChangePageWithFilter((info?.nextPage as number) + 1)}>
-              {(info?.nextPage as number) + 1}
-            </button>
-          )}
-        </div>
-        <button
-          disabled={!info?.nextPage}
-          onClick={() => handleChangePageWithFilter(info?.nextPage as number)}
-        >
-          <CaretRight size={isDesktop ? 24 : 18} weight='bold' />
-        </button>
-      </Navigation>
+            {info?.nextPage && (
+              <button onClick={() => handleChangePageWithFilter(info?.nextPage as number)}>
+                {info?.nextPage}
+              </button>
+            )}
+            {renderNextpage && (
+              <button onClick={() => handleChangePageWithFilter((info?.nextPage as number) + 1)}>
+                {(info?.nextPage as number) + 1}
+              </button>
+            )}
+          </div>
+          <button
+            disabled={!info?.nextPage}
+            onClick={() => handleChangePageWithFilter(info?.nextPage as number)}
+          >
+            <CaretRight size={isDesktop ? 24 : 18} weight='bold' />
+          </button>
+        </Navigation>
+      ) : (
+        ''
+      )}
     </TransactionsContainer>
   )
 }
