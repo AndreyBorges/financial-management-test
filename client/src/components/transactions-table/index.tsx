@@ -51,7 +51,8 @@ const TransactionsTable = () => {
 
   const { handleChangePageWithFilter } = useFilter()
 
-  const renderNextpage = !info?.prevPage && (info?.nextPage as number) + 1 === info?.totalPages
+  const renderNextpage = !info?.prevPage && info?.nextPage && info?.nextPage !== info?.page
+  const renderPrevPage = !info?.nextPage && info?.prevPage && info?.prevPage !== info?.page
 
   return (
     <TransactionsContainer>
@@ -155,12 +156,11 @@ const TransactionsTable = () => {
             <CaretLeft size={isDesktop ? 24 : 18} weight='bold' />
           </button>
           <div>
-            {!info?.nextPage ||
-              (info.prevPage === 0 && (
-                <button onClick={() => handleChangePageWithFilter((info?.prevPage as number) - 1)}>
-                  {(info?.prevPage as number) - 1}
-                </button>
-              ))}
+            {renderPrevPage && (
+              <button onClick={() => handleChangePageWithFilter((info?.prevPage as number) - 1)}>
+                {(info?.prevPage as number) - 1}
+              </button>
+            )}
 
             {info?.prevPage && (
               <button onClick={() => handleChangePageWithFilter(info?.prevPage as number)}>
