@@ -3,6 +3,7 @@ import { ICommonResponseDTO } from '.'
 export interface ICategory {
   id: string
   name: string
+  quantity: number
 }
 
 export interface IGetAllCategoryResponseDTO {
