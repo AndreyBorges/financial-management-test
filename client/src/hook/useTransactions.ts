@@ -2,18 +2,15 @@ import {
   ICreateTransactionDTO,
   IGetAllTransactionsQueryOptions,
   ITransaction,
-  IUpdadeTransactionDTO,
-  ModalType
+  IUpdadeTransactionDTO
 } from '@/interfaces'
 import { transactionsService } from '@/services'
 import { transactionAtom } from '@/store'
 import { useAtom } from 'jotai'
-import { useModal } from '.'
 
 const useTransactions = () => {
   const [state, setState] = useAtom(transactionAtom)
   const { refreshData } = state
-  const { handleOpenModal } = useModal()
 
   const handleGetAllTransactions = async (param?: IGetAllTransactionsQueryOptions) => {
     setState({ isLoading: true })
@@ -54,7 +51,6 @@ const useTransactions = () => {
     setState({ isLoading: true })
 
     const { data, error, success } = await transactionsService.remove({ id })
-    handleOpenModal(ModalType.NULL)
     if (success && data) setState({ success: data.message })
     if (error) setState({ error: error.message })
     handleRefreshTransactions()
@@ -71,14 +67,8 @@ const useTransactions = () => {
     setState({ isLoading: false })
   }
 
-  const handleDeleteCurrentTransaction = (transactions: ITransaction) => {
-    setState({ currentTransaction: transactions })
-    handleOpenModal(ModalType.DELETE_TRANSACTION)
-  }
-
   const handleSetCurrentTransaction = (transactions: ITransaction) => {
     setState({ currentTransaction: transactions })
-    handleOpenModal(ModalType.EDIT_TRANSACTION)
   }
 
   const handleRefreshTransactions = () => {
@@ -93,7 +83,6 @@ const useTransactions = () => {
     handleGetOneTransaction,
     handleRefreshTransactions,
     handleSetCurrentTransaction,
-    handleDeleteCurrentTransaction,
     handleGetAllTransactions
   }
 }
