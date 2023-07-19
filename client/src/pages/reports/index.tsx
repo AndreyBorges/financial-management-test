@@ -4,20 +4,35 @@ import {
   WrapperReports,
   WalletResumeChart,
   TotalTransactionsByCategoryChart,
-  MostExpensiveTransactionChart,
+  MostHighValuesInCategoryChart,
+  Loading
 } from '@/components'
 import { SecondChartWrapper } from '@/components/reports/wrapper/styles'
+import { useReports } from '@/hook'
+import { useEffect } from 'react'
 
 const Reports = () => {
+  const { handleGetAllReports, isLoading } = useReports()
+
+  useEffect(() => {
+    handleGetAllReports()
+  }, [])
+
   return (
     <Layout>
       <WrapperReports>
-        <HeaderReports />
-        <WalletResumeChart />
-        <SecondChartWrapper>
-          <TotalTransactionsByCategoryChart />
-          <MostExpensiveTransactionChart />
-        </SecondChartWrapper>
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <>
+            <HeaderReports />
+            <WalletResumeChart />
+            <SecondChartWrapper>
+              <TotalTransactionsByCategoryChart />
+              <MostHighValuesInCategoryChart />
+            </SecondChartWrapper>
+          </>
+        )}
       </WrapperReports>
     </Layout>
   )
