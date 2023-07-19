@@ -5,7 +5,7 @@ import {
   JoinColumn,
   OneToMany,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
+  UpdateDateColumn
 } from 'typeorm';
 import { Transaction } from '../../transaction/entities';
 
@@ -16,7 +16,7 @@ export class Category {
 
   @OneToMany(() => Transaction, (transaction) => transaction.category)
   @JoinColumn()
-  transaction: Transaction[];
+  transactions: Transaction[];
 
   @Column({ default: 0 })
   quantity: number;
