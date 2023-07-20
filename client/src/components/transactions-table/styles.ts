@@ -223,7 +223,7 @@ export const Navigation = styled.footer`
 
     @media (max-width: 750px) {
       margin-block: 2rem 1rem;
-      justify-content: space-between;
+      justify-content: flex-end;
 
       > div {
         gap: 0.5rem;
