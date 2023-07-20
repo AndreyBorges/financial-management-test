@@ -1,34 +1,67 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Financial Management App
 
-## Getting Started
+## Instalação
 
-First, run the development server:
+Para executar o projeto, é necessário ter o [Node.js](https://nodejs.org/) instalado em seu sistema. Após instalar o Node.js, execute o seguinte comando para instalar as dependências do projeto:
+
+```bash
+npm install
+```
+
+## Inicialização
+
+Após a instalação das dependências, você pode iniciar o projeto usando o seguinte comando:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+O comando acima iniciará o servidor de desenvolvimento e você poderá acessar o aplicativo em [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Bibliotecas Utilizadas
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Aqui está uma explicação resumida do motivo do uso de cada biblioteca no projeto:
 
-## Learn More
+### phosphor-icons/react
 
-To learn more about Next.js, take a look at the following resources:
+Essa biblioteca fornece um conjunto de ícones modernos e elegantes que podem ser facilmente integrados em componentes React. Ela foi escolhida para melhorar a experiência do usuário com um design visual atraente.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### radix-ui/react-radio-group
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+O `react-radio-group` do Radix UI é uma ótima opção para criar grupos de botões de rádio acessíveis e personalizáveis. Ele nos permite criar seletores de opções de forma mais consistente e com suporte a teclado, o que é importante para garantir uma acessibilidade adequada.
 
-## Deploy on Vercel
+### yup
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+O `yup` é uma biblioteca de validação de esquema JavaScript leve e poderosa. Ele é amplamente utilizado para validar dados de entrada do usuário e garantir que os dados enviados ao servidor estejam em conformidade com os requisitos esperados.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### styled-components
+
+O `styled-components` permite escrever estilos em JavaScript, tornando o código mais legível e fácil de manter. Além disso, ele oferece suporte a estilos dinâmicos e compartilhamento de estilos entre componentes, o que agiliza o desenvolvimento.
+
+### react-toastify
+
+O `react-toastify` é uma biblioteca utilizada para exibir notificações de forma elegante e responsiva. Ela nos ajuda a fornecer feedback visual aos usuários sobre ações importantes ou informações relevantes durante a interação com o aplicativo.
+
+### react-select
+
+O `react-select` é uma biblioteca para criar campos de seleção personalizáveis e amigáveis para o usuário. Ela é utilizada para criar listas suspensas e campos de pesquisa avançados com suporte a opções múltiplas, filtragem e outras funcionalidades úteis.
+
+### react-chartjs-2
+
+O `react-chartjs-2` é uma biblioteca que permite integrar facilmente gráficos do Chart.js em aplicativos React. Com ela, podemos criar visualizações de dados interativas e informativas para melhorar a experiência do usuário.
+
+### jotai
+
+O `jotai` é uma biblioteca de gerenciamento de estado prática e escalável. Ele é utilizado para gerenciar o estado da aplicação de forma eficiente, especialmente quando o número de estados globais aumenta, oferecendo uma alternativa simplificada ao Redux.
+
+### date-fns
+
+A biblioteca `date-fns` é uma escolha popular para manipulação e formatação de datas em JavaScript. Ela oferece funções simples e eficazes para trabalhar com datas, tornando a lógica relacionada a datas mais fácil de implementar e entender.
+
+### axios
+
+O `axios` é uma biblioteca de requisições HTTP que simplifica a comunicação com APIs externas. Ele fornece uma sintaxe clara e amigável para realizar chamadas de API e tratamento de respostas, tornando o processo de integração do aplicativo com o servidor mais suave e confiável.
+
+## Conclusão
+
+Essa documentação fornece informações sobre a instalação e inicialização do projeto, bem como uma breve explicação das bibliotecas utilizadas e suas respectivas finalidades. Com essas bibliotecas, o aplicativo está equipado com recursos avançados, garantindo uma experiência de usuário agradável, acessível e funcional.
