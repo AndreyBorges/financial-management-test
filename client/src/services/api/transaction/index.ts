@@ -73,7 +73,7 @@ const update = async ({
     const { data: responseData } = await Api.patch(`${baseUrl}/${id}`, data)
     if (responseData.error) throw data
     return {
-      ...responseData,
+      data: responseData,
       success: true,
       error: null
     }
