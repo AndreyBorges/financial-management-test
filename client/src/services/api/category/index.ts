@@ -1,4 +1,13 @@
-import { IAxiosResponse, ICreateCategoryDTO, ICreateCategoryResponseDTO, IDeleteCategoryQueryOptions, IDeleteOneCategoryResponseDTO, IGetAllCategoryResponseDTO, IUpdadeCategoryDTO, IUpdateCategoryResponseDTO } from '@/interfaces'
+import {
+  IAxiosResponse,
+  ICreateCategoryDTO,
+  ICreateCategoryResponseDTO,
+  IDeleteCategoryQueryOptions,
+  IDeleteOneCategoryResponseDTO,
+  IGetAllCategoryResponseDTO,
+  IUpdadeCategoryDTO,
+  IUpdateCategoryResponseDTO
+} from '@/interfaces'
 import { Api } from '@/services'
 import { AxiosError } from 'axios'
 
@@ -30,9 +39,10 @@ const update = async ({
 }: IUpdadeCategoryDTO): Promise<IAxiosResponse<IUpdateCategoryResponseDTO>> => {
   try {
     const { data: responseData } = await Api.patch(`${baseUrl}/${id}`, data)
+
     if (responseData.error) throw data
     return {
-      ...responseData,
+      data: responseData,
       success: true,
       error: null
     }
