@@ -164,7 +164,7 @@ export const Navigation = styled.footer`
     padding-inline: 1rem;
     width: 100%;
     display: flex;
-    margin-block: 4rem 2rem;
+    margin-block: 4rem 0;
     align-items: center;
     justify-content: flex-end;
     gap: 1rem;
