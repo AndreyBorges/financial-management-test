@@ -31,7 +31,7 @@ const useCategories = () => {
       handleRefreshCategory()
       toast.success(data.message, {
         position: 'top-right',
-        autoClose: 1000,
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -42,7 +42,7 @@ const useCategories = () => {
     if (error)
       toast.error(error.message, {
         position: 'top-right',
-        autoClose: 1000,
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -60,7 +60,7 @@ const useCategories = () => {
     if (success && data)
       toast.success(data.message, {
         position: 'top-right',
-        autoClose: 1000,
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -71,7 +71,7 @@ const useCategories = () => {
     if (error)
       toast.error(error.message, {
         position: 'top-right',
-        autoClose: 1000,
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -94,7 +94,7 @@ const useCategories = () => {
       handleRefreshCategory()
       toast.success(data.message, {
         position: 'top-right',
-        autoClose: 1000,
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -106,7 +106,7 @@ const useCategories = () => {
     if (error) {
       toast.error(error.message, {
         position: 'top-right',
-        autoClose: 1000,
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
