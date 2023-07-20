@@ -1,4 +1,4 @@
-import { useFilter, useMediaQuery, useModal, useTransactions } from '@/hook'
+import { useCategories, useFilter, useMediaQuery, useModal, useTransactions } from '@/hook'
 import { ModalType, TransactionType } from '@/interfaces'
 import { capitalizeString, formatDate, handleMaskValue } from '@/utils'
 import { CaretLeft, CaretRight, Eye, PencilSimpleLine, Plus, Trash } from '@phosphor-icons/react'
@@ -48,6 +48,8 @@ const TransactionsTable = () => {
   const { handleOpenModal } = useModal()
   const { handleSetCurrentTransaction, state } = useTransactions()
   const { transactions, isLoading, info } = state
+  const { state: stateCategories } = useCategories()
+  const { categories } = stateCategories
 
   const { handleChangePageWithFilter } = useFilter()
 
@@ -84,7 +86,12 @@ const TransactionsTable = () => {
                   <AmountItem
                     {...{ amount: transaction.amount, type: transaction.type as TransactionType }}
                   />
-                  <CategoryTag>
+                  <CategoryTag
+                    color={
+                      categories.find(category => category.name === transaction.category)
+                        ?.color as string
+                    }
+                  >
                     <p>{capitalizeString(transaction.category)}</p>
                   </CategoryTag>
                   {isTablet && (

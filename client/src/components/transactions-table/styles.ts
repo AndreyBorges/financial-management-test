@@ -83,23 +83,27 @@ export const TransactionsTableWrapper = styled.table`
   `}
 `
 
-export const CategoryTag = styled.td`
-  ${({ theme }) => css`
+interface ICategoriesProps {
+  color: string
+}
+
+export const CategoryTag = styled.td<ICategoriesProps>`
+  ${({ theme, color }) => css`
     margin: 0 auto;
     min-width: 200px;
     display: flex;
     height: 100%;
     align-items: center;
     justify-content: flex-end;
-    
+
     p {
       padding-inline: 0.5rem;
       align-items: center;
       justify-content: center;
       border-radius: 6px;
-      border: 1px solid ${theme.green450};
+      border: 1px solid ${color};
       height: 24px;
-      background: ${theme.green450};
+      background: ${color};
       color: ${theme.gray50} !important;
       letter-spacing: 0.1rem;
     }
