@@ -18,11 +18,11 @@ export class SeedService {
   async createCategories(): Promise<Category[]> {
     const categories: Category[] = [];
     const categoryNames = [
-      'Mercado',
-      'Salário',
-      'Investimento',
-      'Compras',
-      'Outros',
+      'mercado',
+      'salário',
+      'investimento',
+      'compras',
+      'outros',
     ];
     for (const name of categoryNames) {
       const category = new Category();
