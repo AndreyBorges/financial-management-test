@@ -29,8 +29,7 @@ const ModalDeleteCategory: FC = () => {
         <ModalBody>
           <p>Tem certeza que deseja excluir esta categoria?</p>
           <p>
-            Se esta categoria for apagada, todas as transações envolvendo{' '}
-            <span>{currentCategory?.quantity}</span> serão apagadas tambem!
+            Existem <span>{currentCategory?.quantity}</span> transações vinculadas a esta categoria!
           </p>
 
           <strong>OBS.: Não será possivel reverter esta ação.</strong>

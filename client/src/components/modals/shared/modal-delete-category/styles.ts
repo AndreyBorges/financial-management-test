@@ -99,6 +99,9 @@ export const ModalBody = styled.div`
     strong {
       font-size: ${pxToRem(18)};
     }
+    strong{
+      color: ${theme.error};
+    }
     span {
       font-weight: bold;
       font-size: ${pxToRem(20)};
