@@ -12,7 +12,7 @@ export const StyledWrapper = styled.main`
 `
 
 export const SecondChartWrapper = styled.div`
-  margin-block: 1.5rem;
+  margin-block: 1.5rem 0;
   max-width: calc(1220px);
   display: grid;
   grid-template-columns: repeat(2, 1fr);
