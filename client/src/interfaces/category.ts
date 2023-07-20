@@ -4,6 +4,7 @@ export interface ICategory {
   id: string
   name: string
   quantity: number
+  color: string
 }
 
 export interface IGetAllCategoryResponseDTO {
