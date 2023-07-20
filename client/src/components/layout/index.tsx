@@ -1,4 +1,4 @@
-import { Header, Modals, TransactionsTable, NavBar } from '@/components'
+import { Footer, Header, Modals } from '@/components'
 
 import { useCategories, useTransactions } from '@/hook'
 import { FC, useEffect } from 'react'
@@ -23,6 +23,7 @@ const Layout: FC<{
     <>
       <Header />
       {children}
+      <Footer />
       <Modals />
     </>
   )
