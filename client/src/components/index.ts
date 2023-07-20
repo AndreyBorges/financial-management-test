@@ -9,5 +9,6 @@ export { default as SelectInput } from './select'
 export { default as TransactionsTable } from './transactions-table'
 export { default as Layout } from './layout'
 export { default as BoxChart } from './box-chart'
+export { default as Footer } from './footer'
 
 export * from './reports'
