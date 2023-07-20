@@ -3,6 +3,7 @@ import { categoriesService } from '@/services'
 import { categoryAtom } from '@/store'
 import { useAtom } from 'jotai'
 import { useTransactions } from '.'
+import { toast } from 'react-toastify'
 
 const useCategories = () => {
   const [state, setState] = useAtom(categoryAtom)
@@ -25,9 +26,30 @@ const useCategories = () => {
 
     const { data, error, success } = await categoriesService.create(createTransactionDTO)
 
-    if (success && data) setState({ success: data.message })
-    if (error) setState({ error: error.message })
-    handleRefreshCategory()
+    if (success && data) {
+      setState({ success: data.message })
+      handleRefreshCategory()
+      toast.success(data.message, {
+        position: 'top-right',
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined
+      })
+    }
+    if (error)
+      toast.error(error.message, {
+        position: 'top-right',
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined
+      })
+
     setState({ isLoading: false })
   }
 
@@ -35,8 +57,28 @@ const useCategories = () => {
     setState({ isLoading: true })
 
     const { data, error, success } = await categoriesService.remove({ id })
-    if (success && data) setState({ success: data.message })
-    if (error) setState({ error: error.message })
+    if (success && data)
+      toast.success(data.message, {
+        position: 'top-right',
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined
+      })
+
+    if (error)
+      toast.error(error.message, {
+        position: 'top-right',
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined
+      })
+
     handleRefreshCategory()
     handleRefreshTransactions()
 
@@ -47,9 +89,31 @@ const useCategories = () => {
     setState({ isLoading: true })
 
     const { data, error, success } = await categoriesService.update(updateTransactionDTO)
-    if (success && data) setState({ success: data.message })
-    if (error) setState({ error: error.message })
-    handleRefreshCategory()
+    
+    if (success && data) {
+      handleRefreshCategory()
+      toast.success(data.message, {
+        position: 'top-right',
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined
+      })
+    }
+
+    if (error) {
+      toast.error(error.message, {
+        position: 'top-right',
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined
+      })
+    }
 
     setState({ isLoading: false })
   }
