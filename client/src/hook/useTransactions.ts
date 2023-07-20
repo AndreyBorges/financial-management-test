@@ -7,6 +7,7 @@ import {
 import { transactionsService } from '@/services'
 import { transactionAtom } from '@/store'
 import { useAtom } from 'jotai'
+import { toast } from 'react-toastify'
 
 const useTransactions = () => {
   const [state, setState] = useAtom(transactionAtom)
@@ -32,9 +33,31 @@ const useTransactions = () => {
 
     const { data, error, success } = await transactionsService.create(createTransactionDTO)
 
-    if (success && data) setState({ success: data.message })
-    if (error) setState({ error: error.message })
-    handleRefreshTransactions()
+    if (success && data) {
+      handleRefreshTransactions()
+      toast.success(data.message, {
+        position: 'top-right',
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined
+      })
+    }
+    if (error) {
+      toast.error(error.message, {
+        position: 'top-right',
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined
+      })
+      setState({ error: error.message })
+    }
+
     setState({ isLoading: false })
   }
 
@@ -51,9 +74,30 @@ const useTransactions = () => {
     setState({ isLoading: true })
 
     const { data, error, success } = await transactionsService.remove({ id })
-    if (success && data) setState({ success: data.message })
-    if (error) setState({ error: error.message })
-    handleRefreshTransactions()
+    if (success && data) {
+      handleRefreshTransactions()
+      toast.success(data.message, {
+        position: 'top-right',
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined
+      })
+    }
+    if (error) {
+      toast.error(error.message, {
+        position: 'top-right',
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined
+      })
+      setState({ error: error.message })
+    }
     setState({ isLoading: false })
   }
 
@@ -61,9 +105,30 @@ const useTransactions = () => {
     setState({ isLoading: true })
 
     const { data, error, success } = await transactionsService.update(updateTransactionDTO)
-    if (success && data) setState({ success: data.message })
-    if (error) setState({ error: error.message })
-    handleRefreshTransactions()
+    if (success && data) {
+      handleRefreshTransactions()
+      toast.success(data.message, {
+        position: 'top-right',
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined
+      })
+    }
+    if (error) {
+      toast.error(error.message, {
+        position: 'top-right',
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined
+      })
+      setState({ error: error.message })
+    }
     setState({ isLoading: false })
   }
 
