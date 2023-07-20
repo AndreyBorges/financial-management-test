@@ -3,6 +3,7 @@ import { Provider } from 'jotai'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import { ThemeProvider } from 'styled-components'
+import 'react-toastify/dist/ReactToastify.css'
 import {
   Chart as ChartJS,
   CategoryScale,
